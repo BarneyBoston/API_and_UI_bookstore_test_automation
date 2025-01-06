@@ -9,4 +9,8 @@ import lombok.Data;
 public class ProductRecord {
     @JsonAlias("product_id")
     private int productId;
+    @JsonAlias("min_price")
+    private double minPrice;
+    @JsonAlias("max_price")
+    private double maxPrice;
 }

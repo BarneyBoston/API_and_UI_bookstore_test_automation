@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 public class ProductControllerResponseTests extends BookStoreBaseRestTest {
 
     @Test
-    public void productIdTest() {
+    public void productResponseTest() {
         var response = controller.getProductsResponse();
 
         Assertions.assertThat(response.getStatusCode())
