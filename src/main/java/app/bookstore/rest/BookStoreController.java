@@ -4,6 +4,7 @@ import app.bookstore.dto.Config;
 import app.bookstore.rest.coupon.PostCouponRequest;
 import app.bookstore.rest.coupon.CouponResponse;
 import app.bookstore.rest.coupon.UpdateCouponRequest;
+import app.bookstore.rest.product.ProductRequest;
 import app.bookstore.rest.product.ProductResponse;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
@@ -114,20 +115,46 @@ public class BookStoreController {
                 .get(PRODUCTS);
     }
 
-    @Step("POST " + PRODUCTS)
-    public Response postProductsResponse(String body) {
-        return givenPost(PRODUCTS)
-                .body(body)
-                .post(PRODUCTS);
-    }
-
-
     public List<ProductResponse> getProducts() {
         return getProductsResponse()
                 .then()
                 .extract()
                 .jsonPath()
                 .getList("$", ProductResponse.class);
+    }
+
+    @Step("POST " + PRODUCTS)
+    public Response postProductsResponse(ProductRequest request) {
+        return givenPost(PRODUCTS)
+                .body(request)
+                .post(PRODUCTS);
+    }
+
+    public ProductResponse postProducts(ProductRequest request) {
+        return postProductsResponse(request)
+                .then()
+                .extract()
+                .as(ProductResponse.class);
+    }
+
+    @Step("PUT " + PRODUCTS)
+    public Response updateProductsResponse(String id, ProductRequest request) {
+        return givenPut(PRODUCTS + "/" + id)
+                .body(request)
+                .put(PRODUCTS + "/" + id);
+    }
+
+    public ProductResponse updateProduct(String id, ProductRequest request) {
+        return updateProductsResponse(id, request)
+                .then()
+                .extract()
+                .as(ProductResponse.class);
+    }
+
+    @Step("DELETE " + PRODUCTS)
+    public Response deleteProductsResponse(String id) {
+        return givenDelete(PRODUCTS + "/" + id)
+                .delete(PRODUCTS + "/" + id);
     }
 
     @Step("GET " + COUPONS)
