@@ -24,6 +24,12 @@ public class BookStoreDB {
                 PostRecord.class);
     }
 
+    @Step("SELECT orders")
+    public List<PostRecord> selectOrders() {
+        return database.getResultsForQuery("SELECT * FROM wp_posts WHERE post_type = 'shop_order'",
+                PostRecord.class);
+    }
+
     @Step("SELECT ")
     public List<PostRecord> selectNameFromPosts(String name) {
         return database.getResultsForQuery("SELECT * FROM wp_posts WHERE post_title = \"" + name + "\"",

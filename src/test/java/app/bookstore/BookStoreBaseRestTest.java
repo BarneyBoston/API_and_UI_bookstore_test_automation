@@ -10,7 +10,7 @@ public class BookStoreBaseRestTest {
     public BookStoreDB db;
 
     @BeforeClass
-    public void setup(){
+    public void setup() {
         controller = new BookStoreController();
         db = new BookStoreDB();
     }

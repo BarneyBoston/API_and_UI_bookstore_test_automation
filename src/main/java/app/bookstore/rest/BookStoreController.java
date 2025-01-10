@@ -1,9 +1,15 @@
 package app.bookstore.rest;
 
 import app.bookstore.dto.Config;
-import app.bookstore.rest.coupon.PostCouponRequest;
 import app.bookstore.rest.coupon.CouponResponse;
+import app.bookstore.rest.coupon.PostCouponRequest;
 import app.bookstore.rest.coupon.UpdateCouponRequest;
+import app.bookstore.rest.customers.CustomersRequest;
+import app.bookstore.rest.customers.CustomersResponse;
+import app.bookstore.rest.customers.UpdateCustomersRequest;
+import app.bookstore.rest.orders.OrdersResponse;
+import app.bookstore.rest.orders.PostOrdersRequest;
+import app.bookstore.rest.orders.PutOrdersRequest;
 import app.bookstore.rest.product.ProductRequest;
 import app.bookstore.rest.product.ProductResponse;
 import io.qameta.allure.Step;
@@ -33,8 +39,11 @@ public class BookStoreController {
         this.consumerSecret = config.getConsumerSecret();
         this.baseUri = config.getBaseUri();
     }
+
     private static final String PRODUCTS = "/products";
     private static final String COUPONS = "/coupons";
+    private static final String CUSTOMERS = "/customers";
+    private static final String ORDERS = "/orders";
 
 
     public RequestSpecification givenGet(String endpoint) {
@@ -208,5 +217,82 @@ public class BookStoreController {
         return givenDelete(COUPONS + "/" + id + "?force=true")
                 .queryParam("force", force)
                 .delete(COUPONS + "/" + id);
+    }
+
+    @Step("GET " + CUSTOMERS)
+    public Response getCustomersResponse() {
+        return givenGet(CUSTOMERS)
+                .get(CUSTOMERS);
+    }
+
+    public List<CustomersResponse> getCustomers() {
+        return getCustomersResponse()
+                .then()
+                .extract()
+                .jsonPath()
+                .getList(".", CustomersResponse.class);
+    }
+
+    @Step("POST " + CUSTOMERS)
+    public Response postCustomersResponse(CustomersRequest request) {
+        return givenPost(CUSTOMERS)
+                .body(request)
+                .post(CUSTOMERS);
+    }
+
+    public CustomersResponse postCustomers(CustomersRequest request) {
+        return postCustomersResponse(request)
+                .then()
+                .extract()
+                .as(CustomersResponse.class);
+    }
+
+    @Step("PUT " + CUSTOMERS)
+    public Response updateCustomersResponse(String id, UpdateCustomersRequest request) {
+        return givenPut(CUSTOMERS + "/" + id)
+                .body(request)
+                .put(CUSTOMERS + "/" + id);
+    }
+
+    @Step("DELETE " + CUSTOMERS)
+    public Response deleteCustomersResponse(String id, Boolean force) {
+        return givenDelete(CUSTOMERS + "/" + id + "?force=true")
+                .queryParam("force", force)
+                .delete(CUSTOMERS + "/" + id);
+    }
+
+    @Step("GET " + ORDERS)
+    public Response getOrdersResponse() {
+        return givenGet(ORDERS)
+                .get(ORDERS);
+    }
+
+    public List<OrdersResponse> getOrders() {
+        return getOrdersResponse()
+                .then()
+                .extract()
+                .jsonPath()
+                .getList(".", OrdersResponse.class);
+    }
+
+    @Step("POST " + ORDERS)
+    public Response postOrdersResponse(PostOrdersRequest request) {
+        return givenPost(ORDERS)
+                .body(request)
+                .post(ORDERS);
+    }
+
+    @Step("PUT " + ORDERS)
+    public Response updateOrdersResponse(String id, PutOrdersRequest request) {
+        return givenPut(ORDERS + "/" + id)
+                .body(request)
+                .put(ORDERS + "/" + id);
+    }
+
+    @Step("DELETE " + ORDERS)
+    public Response deleteOrdersResponse(String id, Boolean force) {
+        return givenDelete(ORDERS + "/" + id + "?force=true")
+                .queryParam("force", force)
+                .delete(ORDERS + "/" + id);
     }
 }

@@ -23,7 +23,7 @@ public class CouponControllerDataTests extends BookStoreBaseRestTest {
 
         SoftAssertions softly = new SoftAssertions();
         softly.assertThat(response)
-                .describedAs("Code, amount and status of posted coupon doesn't match")
+                .describedAs("Code, amount and status of posted coupon doesn't match posting")
                 .extracting("code", "amount", "status")
                 .containsExactly(number, "5.00", "publish");
         softly.assertAll();
