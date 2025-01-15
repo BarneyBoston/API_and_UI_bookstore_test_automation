@@ -8,15 +8,18 @@ import java.io.File;
 import java.io.IOException;
 
 @Getter
+@SuppressWarnings("unused")
 public class Config {
     private static Config instance;
-
     private String dbUsername;
     private String dbPassword;
     private String dbConnString;
     private String baseUri;
     private String consumerKey;
     private String consumerSecret;
+    private String baseUrl;
+    private String browser;
+    private Boolean isHeadless;
 
     public static Config getInstance() {
         if (instance == null) {
