@@ -7,6 +7,7 @@ import app.bookstore.rest.utils.DataAssertions;
 import app.bookstore.rest.utils.DataTestParameters;
 import app.bookstore.rest.utils.MatrixCreator;
 import org.assertj.core.api.AssertionsForInterfaceTypes;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -95,5 +96,16 @@ public class ProductControllerDataTests extends BookStoreBaseRestTest {
         var response = controller.updateProduct(idFromDb.toString(), request);
 
         AssertionsForInterfaceTypes.assertThat(response.getPrice()).isEqualTo(12.0);
+    }
+
+    @AfterClass
+    public void clear() {
+        var productIds = controller.getProducts()
+                .stream()
+                .filter(element -> element.getName().equals("NAME") || element.getName().equals("Product") || element.getName().equals("New Book"))
+                .map(ProductResponse::getId)
+                .toList();
+
+        productIds.forEach(productId -> controller.deleteProductsResponse(productId.toString()));
     }
 }
