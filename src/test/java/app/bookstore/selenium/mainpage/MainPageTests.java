@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 public class MainPageTests extends BookStoreBaseWebTest {
 
     @Test
-    public void login(){
-
+    public void test() {
+        login().goToCartPage();
     }
 }

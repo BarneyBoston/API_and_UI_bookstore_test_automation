@@ -3,15 +3,17 @@ package app.bookstore;
 import app.bookstore.dto.Config;
 import app.bookstore.selenium.helpers.BrowserFactory;
 import app.bookstore.selenium.helpers.NoSuchBrowserException;
+import app.bookstore.selenium.pages.MainPage;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.PageFactory;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
-public class BookStoreBaseWebTest {
+public abstract class BookStoreBaseWebTest {
 
     protected WebDriver driver;
 
@@ -20,10 +22,14 @@ public class BookStoreBaseWebTest {
         var browser = Config.getInstance().getBrowser();
         try {
             driver = BrowserFactory.getBrowser(browser);
-            driver.get(Config.getInstance().getBaseUrl());
         } catch (NoSuchBrowserException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    protected MainPage login() {
+        driver.get(Config.getInstance().getBaseUrl());
+        return PageFactory.initElements(driver, MainPage.class);
     }
 
     @AfterMethod
