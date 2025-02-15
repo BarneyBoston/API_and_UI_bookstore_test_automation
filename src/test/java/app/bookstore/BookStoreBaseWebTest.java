@@ -1,5 +1,6 @@
 package app.bookstore;
 
+import app.bookstore.db.BookStoreDB;
 import app.bookstore.dto.Config;
 import app.bookstore.selenium.helpers.BrowserFactory;
 import app.bookstore.selenium.helpers.NoSuchBrowserException;
@@ -16,6 +17,7 @@ import org.testng.annotations.BeforeMethod;
 public abstract class BookStoreBaseWebTest {
 
     protected WebDriver driver;
+    public BookStoreDB db;
 
     @BeforeMethod
     public void setUp() {
@@ -25,6 +27,7 @@ public abstract class BookStoreBaseWebTest {
         } catch (NoSuchBrowserException e) {
             throw new RuntimeException(e);
         }
+        db = BookStoreDB.getInstance();
     }
 
     protected MainPage login() {

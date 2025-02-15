@@ -9,8 +9,19 @@ import io.qameta.allure.Step;
 import java.util.List;
 
 public class BookStoreDB {
+    private static BookStoreDB instance;
+    private final DBClient database;
 
-    private final DBClient database = new DBClient(BookStoreDBAccessDetails.getDbAccessDetails());
+    private BookStoreDB() {
+        database = new DBClient(BookStoreDBAccessDetails.getDbAccessDetails());
+    }
+
+    public static synchronized BookStoreDB getInstance() {
+        if (instance == null) {
+            instance = new BookStoreDB();
+        }
+        return instance;
+    }
 
     @Step("SELECT products")
     public List<ProductRecord> selectProducts() {
@@ -30,10 +41,17 @@ public class BookStoreDB {
                 PostRecord.class);
     }
 
-    @Step("SELECT ")
+    @Step("SELECT product named {name}")
     public List<PostRecord> selectNameFromPosts(String name) {
         return database.getResultsForQuery("SELECT * FROM wp_posts WHERE post_title = \"" + name + "\"",
                 PostRecord.class);
     }
+
+    @Step("SELECT all active products")
+    public List<PostRecord> selectActiveProducts() {
+        return database.getResultsForQuery("SELECT * from wp_posts where guid LIKE '%post_type=product%'",
+                PostRecord.class);
+    }
+
 
 }

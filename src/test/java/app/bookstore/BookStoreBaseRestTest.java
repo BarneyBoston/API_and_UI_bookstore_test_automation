@@ -12,6 +12,6 @@ public class BookStoreBaseRestTest {
     @BeforeClass
     public void setup() {
         controller = new BookStoreController();
-        db = new BookStoreDB();
+        db = BookStoreDB.getInstance();
     }
 }

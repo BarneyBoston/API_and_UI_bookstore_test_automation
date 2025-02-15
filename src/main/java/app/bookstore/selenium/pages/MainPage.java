@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.List;
+
 public class MainPage extends BasePage implements HasNavigationBar {
 
     @FindBy(css = ".wc-block-mini-cart__button")
@@ -15,7 +17,7 @@ public class MainPage extends BasePage implements HasNavigationBar {
     private WebElement myAccountPageButton;
 
     @FindBy(css = ".attachment-woocommerce_thumbnail")
-    private WebElement productPageImage;
+    private List<WebElement> productPageImages;
 
     @FindBy(xpath = "//a[text()='Wishlist']")
     private WebElement wishlistPageButton;
@@ -25,6 +27,10 @@ public class MainPage extends BasePage implements HasNavigationBar {
 
     @FindBy(xpath = "//a[text()='Add to cart']")
     private WebElement addToCartButton;
+
+    @FindBy(css = ".woocommerce-loop-product__title")
+    private List<WebElement> productTitles;
+
 
     public MainPage(WebDriver driver) {
         super(driver);
@@ -56,7 +62,7 @@ public class MainPage extends BasePage implements HasNavigationBar {
     }
 
     public ProductPage goToProductPage() {
-        clickElement(productPageImage);
+        clickElement(productPageImages.get(0));
         return PageFactory.initElements(driver, ProductPage.class);
     }
 
@@ -69,6 +75,12 @@ public class MainPage extends BasePage implements HasNavigationBar {
         clickElement(myAccountPageButton);
         clickElement(lostYouPasswordPageButton);
         return PageFactory.initElements(driver, LostPasswordPage.class);
+    }
+
+    public List<String> getProductTitles() {
+        return productTitles.stream()
+                .map(WebElement::getText)
+                .toList();
     }
 
 }
