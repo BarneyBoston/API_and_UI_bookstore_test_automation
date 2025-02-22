@@ -40,4 +40,23 @@ public abstract class BasePage implements HasNavigationBar {
         }
         throw new RuntimeException("Failed to click element after " + maxRetries + " attempts");
     }
+
+    protected void sendKeysToElement(WebElement element, String text) {
+        int maxRetries = 5;
+        int tries = 0;
+
+        while (tries < maxRetries) {
+            try {
+                new WebDriverWait(driver, Duration.ofSeconds(5))
+                        .until(ExpectedConditions.visibilityOf(element));
+                element.clear();
+                element.sendKeys(text);
+                return;
+            } catch (StaleElementReferenceException | NoSuchElementException | TimeoutException e) {
+                System.out.println("Attempt " + (tries + 1) + " failed: " + e.getClass().getSimpleName());
+                tries++;
+            }
+        }
+        throw new RuntimeException("Failed to send keys to element after " + maxRetries + " attempts");
+    }
 }

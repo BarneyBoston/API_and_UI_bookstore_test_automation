@@ -53,5 +53,10 @@ public class BookStoreDB {
                 PostRecord.class);
     }
 
+    @Step("SELECT random active product")
+    public PostRecord selectRandomActiveProduct() {
+        return database.getResultForQuery("SELECT * from wp_posts where guid LIKE '%post_type=product%' LIMIT 1",
+                PostRecord.class);
+    }
 
 }
