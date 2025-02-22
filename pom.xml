@@ -19,7 +19,7 @@
         <httpcore.version>4.4.16</httpcore.version>
         <restassured.version>5.4.0</restassured.version>
         <!-- SELENIUM -->
-        <selenium.version>4.28.1</selenium.version>
+        <selenium.version>4.29.0</selenium.version>
         <!-- oauth connection library -->
         <oauthsgignpost.version>2.1.1</oauthsgignpost.version>
         <!-- UTILITIES -->

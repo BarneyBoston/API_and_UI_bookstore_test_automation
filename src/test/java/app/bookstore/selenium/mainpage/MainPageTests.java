@@ -27,7 +27,9 @@ public class MainPageTests extends BookStoreBaseWebTest {
 
     @Test
     public void sortByDefault() {
-        var uiTitles = login().selectSortingOption("Default sorting").getProductTitles();
+        var uiTitles = login()
+                .selectSortingOption("Default sorting")
+                .getProductTitles();
 
         assertThat(uiTitles).isSortedAccordingTo(Comparator.naturalOrder());
     }
@@ -43,7 +45,9 @@ public class MainPageTests extends BookStoreBaseWebTest {
 
     @Test(dataProvider = "sortingOptions")
     public void sortBy(String sortingOption, Comparator<Double> comparator) {
-        var prices = login().selectSortingOption(sortingOption).getPrices();
+        var prices = login()
+                .selectSortingOption(sortingOption)
+                .getPrices();
 
         assertThat(prices).isSortedAccordingTo(comparator);
     }
@@ -52,11 +56,27 @@ public class MainPageTests extends BookStoreBaseWebTest {
     public void shouldSearchProductRedirectToProductPage() {
         var dbTitle = db.selectRandomActiveProduct().getName();
 
-        login().searchForProduct(dbTitle);
+        login()
+                .searchForProduct(dbTitle);
 
         assertThat(driver.getCurrentUrl())
                 .contains("/product")
                 .describedAs("Searching Product should redirect to product page");
+    }
+
+    @Test
+    public void shouldAddToCartOpenCartPreview() {
+        var bookName = db.selectRandomActiveProduct().getName();
+
+        login()
+                .addToCart(bookName)
+                .assertThatPreviewCartPageIsOpened();
+    }
+
+    @Test
+    public void shouldAllElementsOfMainPageBeVisible() {
+        login()
+                .assertThatMainPageElementsAreVisible();
     }
 
 }

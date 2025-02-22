@@ -2,14 +2,19 @@ package app.bookstore.selenium.pages;
 
 import app.bookstore.selenium.dto.HasNavigationBar;
 import io.qameta.allure.Step;
+import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings("unused")
 public class MainPage extends BasePage implements HasNavigationBar {
@@ -50,6 +55,18 @@ public class MainPage extends BasePage implements HasNavigationBar {
     @FindBy(css = "[type='submit']")
     private WebElement submitButton;
 
+    @FindBy(css = ".wc-block-mini-cart__template-part")
+    private WebElement previewCartContext;
+
+    @FindBy(css = "#primary")
+    private WebElement shopContext;
+
+    @FindBy(css = "#block-9")
+    private WebElement searchContext;
+
+    @FindBy(css = "#block-10")
+    private WebElement favouritesContext;
+
     public MainPage(WebDriver driver) {
         super(driver);
     }
@@ -57,50 +74,50 @@ public class MainPage extends BasePage implements HasNavigationBar {
     @Step("Go to preview cart page with add to cart button")
     public PreviewCartPage goToPreviewCartPageWithAddToCart() {
         clickElement(addToCartButton);
-        return PageFactory.initElements(driver, PreviewCartPage.class);
+        return new PreviewCartPage(driver);
     }
 
     @Step("Go to preview cart page with cart button")
     public PreviewCartPage goToPreviewCartPageWithCartButton() {
         clickElement(getNavigationBar().getCartPageButton());
-        return PageFactory.initElements(driver, PreviewCartPage.class);
+        return new PreviewCartPage(driver);
     }
 
     @Step("Go to cart page")
     public CartPage goToCartPage() {
         clickElement(goToPreviewCartPageWithAddToCart().getViewMyCartButton());
-        return PageFactory.initElements(driver, CartPage.class);
+        return new CartPage(driver);
     }
 
     @Step("Go to checkout page")
     public CheckoutPage goToCheckOutPage() {
         clickElement(goToPreviewCartPageWithAddToCart().getGoToCheckoutButton());
-        return PageFactory.initElements(driver, CheckoutPage.class);
+        return new CheckoutPage(driver);
     }
 
     @Step("Go to my account page")
     public MyAccountPage goToMyAccountPage() {
         clickElement(getNavigationBar().getMyAccountPageButton());
-        return PageFactory.initElements(driver, MyAccountPage.class);
+        return new MyAccountPage(driver);
     }
 
     @Step("Go to product page")
     public ProductPage goToProductPage() {
         clickElement(productPageImages.get(0));
-        return PageFactory.initElements(driver, ProductPage.class);
+        return new ProductPage(driver);
     }
 
     @Step("Go to wishlist page")
     public WishlistPage goToWishlistPage() {
         clickElement(getNavigationBar().getWishlistPageButton());
-        return PageFactory.initElements(driver, WishlistPage.class);
+        return new WishlistPage(driver);
     }
 
     @Step("Go to lost password page")
     public LostPasswordPage goToLostPasswordPage() {
         clickElement(myAccountPageButton);
         clickElement(lostYouPasswordPageButton);
-        return PageFactory.initElements(driver, LostPasswordPage.class);
+        return new LostPasswordPage(driver);
     }
 
     @Step("Get all product titles")
@@ -140,4 +157,27 @@ public class MainPage extends BasePage implements HasNavigationBar {
         clickElement(submitButton);
     }
 
+    @Step("Add to cart book named {bookName}")
+    public MainPage addToCart(String bookName) {
+        clickElement(driver.findElement(By.cssSelector(String.format("[aria-label='Add “%s” to your cart']", bookName))));
+        return this;
+    }
+
+    @Step("Assert that preview cart page is opened")
+    public void assertThatPreviewCartPageIsOpened() {
+        new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOf(previewCartContext));
+        assertThat(previewCartContext.isDisplayed())
+                .isTrue()
+                .describedAs("Preview cart page hasn't been opened");
+    }
+
+    @Step("Assert that preview cart page is opened}")
+    public void assertThatMainPageElementsAreVisible() {
+        SoftAssertions.assertSoftly(softly ->
+        {
+            softly.assertThat(shopContext.isDisplayed()).isTrue().as("Shop context is not displayed");
+            softly.assertThat(searchContext.isDisplayed()).isTrue().as("Search context is not displayed");
+            softly.assertThat(favouritesContext.isDisplayed()).isTrue().as("Favourites context is not displayed");
+        });
+    }
 }
