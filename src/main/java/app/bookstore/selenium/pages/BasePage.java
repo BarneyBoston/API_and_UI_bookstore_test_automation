@@ -1,12 +1,15 @@
 package app.bookstore.selenium.pages;
 
 import app.bookstore.selenium.dto.HasNavigationBar;
+import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public abstract class BasePage implements HasNavigationBar {
 
@@ -58,5 +61,43 @@ public abstract class BasePage implements HasNavigationBar {
             }
         }
         throw new RuntimeException("Failed to send keys to element after " + maxRetries + " attempts");
+    }
+
+    protected void waitForElementToBeVisible(WebElement element, int timeoutInSeconds) {
+        new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds))
+                .until(ExpectedConditions.visibilityOf(element));
+    }
+
+    protected void waitForElementToBeClickable(WebElement element, int timeoutInSeconds) {
+        new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds))
+                .until(ExpectedConditions.elementToBeClickable(element));
+    }
+
+    protected void waitForElementToBePresent(WebElement element, int timeoutInSeconds) {
+        new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds))
+                .until(ExpectedConditions.not(ExpectedConditions.stalenessOf(element)));
+    }
+
+    protected void assertThatElementIsVisible(WebElement element, String text) {
+        waitForElementToBeVisible(element, 3);
+        assertThat(element.isDisplayed())
+                .isTrue()
+                .as(text);
+    }
+
+    protected void assertThatElementIsEnabled(WebElement element, String text) {
+        waitForElementToBeVisible(element, 3);
+        assertThat(element.isEnabled())
+                .isTrue()
+                .as(text);
+    }
+
+    protected void assertThatElementIsDisplayedAndEnabled(WebElement element, String text) {
+        waitForElementToBeVisible(element, 3);
+        SoftAssertions.assertSoftly(softly ->
+        {
+            softly.assertThat(element.isDisplayed()).isTrue().as(text);
+            softly.assertThat(element.isEnabled()).isTrue().as(text);
+        });
     }
 }

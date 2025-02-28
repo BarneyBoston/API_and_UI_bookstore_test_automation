@@ -7,11 +7,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -165,7 +162,7 @@ public class MainPage extends BasePage implements HasNavigationBar {
 
     @Step("Assert that preview cart page is opened")
     public void assertThatPreviewCartPageIsOpened() {
-        new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOf(previewCartContext));
+        waitForElementToBeVisible(previewCartContext, 5);
         assertThat(previewCartContext.isDisplayed())
                 .isTrue()
                 .describedAs("Preview cart page hasn't been opened");
