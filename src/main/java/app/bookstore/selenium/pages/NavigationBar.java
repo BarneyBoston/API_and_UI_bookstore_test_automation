@@ -2,11 +2,13 @@ package app.bookstore.selenium.pages;
 
 import lombok.Getter;
 import org.assertj.core.api.SoftAssertions;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 @Getter
-public class NavigationBar {
+@SuppressWarnings("unused")
+public class NavigationBar extends BasePage {
 
     @FindBy(css = ".wc-block-mini-cart__button")
     private WebElement cartPageButton;
@@ -16,6 +18,15 @@ public class NavigationBar {
 
     @FindBy(xpath = "//a[text()='Wishlist']")
     private WebElement wishlistPageButton;
+
+    public NavigationBar(WebDriver driver) {
+        super(driver);
+    }
+
+    public WishlistPage clickWishlistPageButton() {
+        clickElement(wishlistPageButton);
+        return new WishlistPage(driver);
+    }
 
     public void assertAllNavigationBarElementsVisible() {
         SoftAssertions.assertSoftly(softly ->

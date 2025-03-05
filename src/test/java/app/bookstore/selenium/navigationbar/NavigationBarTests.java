@@ -31,13 +31,13 @@ public class NavigationBarTests extends BookStoreBaseWebTest {
     }
 
     @Test(dataProvider = "pageAllElementsNavigationData")
-    public void shouldAllNavigationBarElementsBeVisible(NamedPageNavigation<? extends HasNavigationBar> namedPageNavigation) {
+    public void should_all_navigation_bar_elements_be_visible(NamedPageNavigation<? extends HasNavigationBar> namedPageNavigation) {
         var page = namedPageNavigation.navigate();
         page.getNavigationBar().assertAllNavigationBarElementsVisible();
     }
 
     @Test(dataProvider = "pageTwoElementsNavigationData")
-    public void shouldTwoNavigationBarElementsBeVisible(NamedPageNavigation<? extends HasNavigationBar> namedPageNavigation) {
+    public void should_two_navigation_bar_elements_be_visible(NamedPageNavigation<? extends HasNavigationBar> namedPageNavigation) {
         var page = namedPageNavigation.navigate();
         page.getNavigationBar().assertTwoNavigationBarElementsVisible();
     }

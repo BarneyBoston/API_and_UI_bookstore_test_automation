@@ -2,6 +2,7 @@ package app.bookstore.selenium.navigationbar;
 
 import app.bookstore.selenium.dto.NamedPageNavigation;
 import app.bookstore.selenium.pages.*;
+import app.bookstore.selenium.pages.productpage.ProductPage;
 
 import java.util.function.Supplier;
 
@@ -30,7 +31,7 @@ public class NavigationBarDataFactory {
     }
 
     public NamedPageNavigation<ProductPage> productPage() {
-        return new NamedPageNavigation<>("ProductPage", () -> loginSupplier.get().goToProductPage());
+        return new NamedPageNavigation<>("ProductPage", () -> loginSupplier.get().goToRandomProductPage());
     }
 
     public NamedPageNavigation<WishlistPage> wishlistPage() {

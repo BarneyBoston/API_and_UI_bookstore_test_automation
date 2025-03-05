@@ -8,9 +8,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.Objects;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+@SuppressWarnings("unused")
 public abstract class BasePage implements HasNavigationBar {
 
     protected WebDriver driver;
@@ -76,6 +78,13 @@ public abstract class BasePage implements HasNavigationBar {
     protected void waitForElementToBePresent(WebElement element, int timeoutInSeconds) {
         new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds))
                 .until(ExpectedConditions.not(ExpectedConditions.stalenessOf(element)));
+    }
+
+    public void waitForPageToLoad(int timeoutInSeconds) {
+        new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds)).until(
+                webDriver -> Objects.equals(((JavascriptExecutor) webDriver)
+                        .executeScript("return document.readyState"), "complete")
+        );
     }
 
     protected void assertThatElementIsVisible(WebElement element, String text) {

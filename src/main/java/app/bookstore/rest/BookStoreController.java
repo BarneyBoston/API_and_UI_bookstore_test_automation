@@ -12,6 +12,7 @@ import app.bookstore.rest.orders.PostOrdersRequest;
 import app.bookstore.rest.orders.PutOrdersRequest;
 import app.bookstore.rest.product.ProductRequest;
 import app.bookstore.rest.product.ProductResponse;
+import app.bookstore.rest.product.ProductReviewResponse;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
@@ -44,6 +45,7 @@ public class BookStoreController {
     private static final String COUPONS = "/coupons";
     private static final String CUSTOMERS = "/customers";
     private static final String ORDERS = "/orders";
+    private static final String REVIEWS = "/products/reviews";
 
 
     public RequestSpecification givenGet(String endpoint) {
@@ -294,5 +296,26 @@ public class BookStoreController {
         return givenDelete(ORDERS + "/" + id + "?force=true")
                 .queryParam("force", force)
                 .delete(ORDERS + "/" + id);
+    }
+
+    @Step("GET " + REVIEWS)
+    public Response getRewviewResponse() {
+        return givenGet(REVIEWS)
+                .get(REVIEWS);
+    }
+
+    public List<ProductReviewResponse> getReviews() {
+        return getRewviewResponse()
+                .then()
+                .extract()
+                .jsonPath()
+                .getList(".", ProductReviewResponse.class);
+    }
+
+    @Step("DELETE " + REVIEWS)
+    public void deleteReviews(String id, Boolean force) {
+        givenDelete(REVIEWS + "/" + id + "?force=true")
+                .queryParam("force", force)
+                .delete(REVIEWS + "/" + id);
     }
 }

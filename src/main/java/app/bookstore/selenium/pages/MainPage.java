@@ -1,6 +1,7 @@
 package app.bookstore.selenium.pages;
 
 import app.bookstore.selenium.dto.HasNavigationBar;
+import app.bookstore.selenium.pages.productpage.ProductPage;
 import io.qameta.allure.Step;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
@@ -64,6 +65,10 @@ public class MainPage extends BasePage implements HasNavigationBar {
     @FindBy(css = "#block-10")
     private WebElement favouritesContext;
 
+    private WebElement getProduct(String product) {
+        return driver.findElement(By.xpath(String.format("//h2[text()='%s']", product)));
+    }
+
     public MainPage(WebDriver driver) {
         super(driver);
     }
@@ -98,9 +103,15 @@ public class MainPage extends BasePage implements HasNavigationBar {
         return new MyAccountPage(driver);
     }
 
-    @Step("Go to product page")
-    public ProductPage goToProductPage() {
+    @Step("Go to random product page")
+    public ProductPage goToRandomProductPage() {
         clickElement(productPageImages.get(0));
+        return new ProductPage(driver);
+    }
+
+    @Step("Go to {product}")
+    public ProductPage goToProductPage(String product) {
+        clickElement(getProduct(product));
         return new ProductPage(driver);
     }
 
