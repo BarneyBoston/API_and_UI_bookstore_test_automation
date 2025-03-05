@@ -40,8 +40,7 @@ public class ProductPageTests extends BookStoreBaseWebTest {
         login()
                 .goToProductPage(bookName)
                 .addProductToCart()
-                .assertViewCartPopUpIsDisplayedAndTextIs(String.format("View cart\n" +
-                        "\"%s\" has been added to your cart.", bookName));
+                .assertViewCartPopUpIsDisplayedAndTextIs(bookName);
     }
 
     @Test

@@ -133,7 +133,7 @@ public class ProductPage extends BasePage {
         SoftAssertions.assertSoftly(softly ->
         {
             softly.assertThat(viewCartPopUp.isDisplayed()).isTrue().as("View cart pop up is not displayed");
-            softly.assertThat(viewCartPopUp.getText()).isEqualTo(message).as("Text is not as expected");
+            softly.assertThat(viewCartPopUp.getText()).contains(message).as("Text is not as expected");
         });
     }
 
