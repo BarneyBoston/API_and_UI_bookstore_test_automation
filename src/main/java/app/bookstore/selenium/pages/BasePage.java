@@ -3,17 +3,23 @@ package app.bookstore.selenium.pages;
 import app.bookstore.selenium.dto.HasNavigationBar;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Objects;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SuppressWarnings("unused")
 public abstract class BasePage implements HasNavigationBar {
+
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+    @FindBy(css = "div.blockUI.blockOverlay")
+    private List<WebElement> loadingSpinners;
 
     protected WebDriver driver;
 
@@ -85,6 +91,11 @@ public abstract class BasePage implements HasNavigationBar {
                 webDriver -> Objects.equals(((JavascriptExecutor) webDriver)
                         .executeScript("return document.readyState"), "complete")
         );
+    }
+
+    public void waitForLoadingSpinnersDisappear() {
+        new WebDriverWait(driver, Duration.ofSeconds(3))
+                .until(driver -> loadingSpinners.isEmpty());
     }
 
     protected void assertThatElementIsVisible(WebElement element, String text) {

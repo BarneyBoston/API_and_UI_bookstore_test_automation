@@ -12,8 +12,6 @@ import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 @SuppressWarnings("unused")
 public class MainPage extends BasePage implements HasNavigationBar {
 
@@ -53,9 +51,6 @@ public class MainPage extends BasePage implements HasNavigationBar {
     @FindBy(css = "[type='submit']")
     private WebElement submitButton;
 
-    @FindBy(css = ".wc-block-mini-cart__template-part")
-    private WebElement previewCartContext;
-
     @FindBy(css = "#primary")
     private WebElement shopContext;
 
@@ -67,6 +62,11 @@ public class MainPage extends BasePage implements HasNavigationBar {
 
     private WebElement getProduct(String product) {
         return driver.findElement(By.xpath(String.format("//h2[text()='%s']", product)));
+    }
+
+    private PreviewCartPage getAddToCartByProduct(String product) {
+        clickElement(driver.findElement(By.cssSelector(String.format("a[aria-label='Add “%s” to your cart'", product))));
+        return new PreviewCartPage(driver);
     }
 
     public MainPage(WebDriver driver) {
@@ -88,6 +88,12 @@ public class MainPage extends BasePage implements HasNavigationBar {
     @Step("Go to cart page")
     public CartPage goToCartPage() {
         clickElement(goToPreviewCartPageWithAddToCart().getViewMyCartButton());
+        return new CartPage(driver);
+    }
+
+    @Step("Go to cart page with product as {product}")
+    public CartPage goToCartPageWithProductAs(String book) {
+        clickElement(getAddToCartByProduct(book).getViewMyCartButton());
         return new CartPage(driver);
     }
 
@@ -166,17 +172,9 @@ public class MainPage extends BasePage implements HasNavigationBar {
     }
 
     @Step("Add to cart book named {bookName}")
-    public MainPage addToCart(String bookName) {
+    public PreviewCartPage addToCart(String bookName) {
         clickElement(driver.findElement(By.cssSelector(String.format("[aria-label='Add “%s” to your cart']", bookName))));
-        return this;
-    }
-
-    @Step("Assert that preview cart page is opened")
-    public void assertThatPreviewCartPageIsOpened() {
-        waitForElementToBeVisible(previewCartContext, 5);
-        assertThat(previewCartContext.isDisplayed())
-                .isTrue()
-                .describedAs("Preview cart page hasn't been opened");
+        return new PreviewCartPage(driver);
     }
 
     @Step("Assert that preview cart page is opened}")

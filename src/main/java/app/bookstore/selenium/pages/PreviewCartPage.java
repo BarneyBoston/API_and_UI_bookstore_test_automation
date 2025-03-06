@@ -2,6 +2,7 @@ package app.bookstore.selenium.pages;
 
 import io.qameta.allure.Step;
 import lombok.Getter;
+import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -48,6 +49,12 @@ public class PreviewCartPage extends BasePage {
     @FindBy(xpath = "//button[text()='Remove item']")
     private WebElement removeItemButton;
 
+    @FindBy(css = ".wc-block-mini-cart__template-part")
+    private WebElement previewCartContext;
+
+    @FindBy(css = "[aria-label='Close mini cart']")
+    private WebElement closePreviewCartButton;
+
     @Step("Click start shopping")
     public MainPage clickStartShopping() {
         clickElement(startShoppingButton);
@@ -82,6 +89,12 @@ public class PreviewCartPage extends BasePage {
     public CheckoutPage goToCheckout() {
         clickElement(goToCheckoutButton);
         return new CheckoutPage(driver);
+    }
+
+    @Step("Click close preview cart")
+    public MainPage closePreviewCart() {
+        clickElement(closePreviewCartButton);
+        return new MainPage(driver);
     }
 
     @Step("Assert product quantity changed to {number}")
@@ -121,4 +134,11 @@ public class PreviewCartPage extends BasePage {
         });
     }
 
+    @Step("Assert that preview cart page is opened")
+    public void assertThatPreviewCartPageIsOpened() {
+        waitForElementToBeVisible(previewCartContext, 5);
+        Assertions.assertThat(previewCartContext.isDisplayed())
+                .isTrue()
+                .describedAs("Preview cart page hasn't been opened");
+    }
 }

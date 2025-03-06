@@ -28,6 +28,11 @@ public class NavigationBar extends BasePage {
         return new WishlistPage(driver);
     }
 
+    public PreviewCartPage clickCartPageButton() {
+        clickElement(cartPageButton);
+        return new PreviewCartPage(driver);
+    }
+
     public void assertAllNavigationBarElementsVisible() {
         SoftAssertions.assertSoftly(softly ->
         {
