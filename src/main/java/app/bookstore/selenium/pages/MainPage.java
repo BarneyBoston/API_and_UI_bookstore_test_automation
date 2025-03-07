@@ -100,6 +100,7 @@ public class MainPage extends BasePage implements HasNavigationBar {
     @Step("Go to checkout page")
     public CheckoutPage goToCheckOutPage() {
         clickElement(goToPreviewCartPageWithAddToCart().getGoToCheckoutButton());
+        waitForLoadingSpinnersDisappear();
         return new CheckoutPage(driver);
     }
 

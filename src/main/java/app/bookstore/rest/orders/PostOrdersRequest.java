@@ -11,4 +11,5 @@ public class PostOrdersRequest {
     private String payment_method;
     private String payment_method_title;
     private String set_paid;
+    private Billing billing;
 }

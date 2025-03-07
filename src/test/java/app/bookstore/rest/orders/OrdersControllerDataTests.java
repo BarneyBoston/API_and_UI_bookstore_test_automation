@@ -12,6 +12,19 @@ public class OrdersControllerDataTests extends BookStoreBaseRestTest {
     @Test()
     public void ordersDataVsDbTest() {
         var request = PostOrdersRequest.builder()
+                .billing(Billing.builder()
+                        .first_name("testName")
+                        .last_name("testSurname")
+                        .company("testCompany")
+                        .address_1("testAddress1")
+                        .address_2("testAddress2")
+                        .city("testCity")
+                        .state("testState")
+                        .postcode("12-123")
+                        .country("testCountry")
+                        .email("testEmail@example.com")
+                        .phone("123456789")
+                        .build())
                 .build();
         int randomTimes = ThreadLocalRandom.current().nextInt(1, 11);
         for (int i = 0; i < randomTimes; i++) {

@@ -120,4 +120,13 @@ public abstract class BasePage implements HasNavigationBar {
             softly.assertThat(element.isEnabled()).isTrue().as(text);
         });
     }
+
+    protected void switchToIframe(WebElement element) {
+        waitForElementToBeVisible(element, 3);
+        driver.switchTo().frame(element);
+    }
+
+    protected void switchToDefaultContent() {
+        driver.switchTo().defaultContent();
+    }
 }

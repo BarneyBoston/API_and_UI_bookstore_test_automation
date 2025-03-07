@@ -7,5 +7,5 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OrdersResponse {
     private Integer id;
-
+    private Billing billing;
 }
