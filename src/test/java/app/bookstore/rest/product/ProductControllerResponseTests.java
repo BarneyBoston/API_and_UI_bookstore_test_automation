@@ -3,6 +3,7 @@ package app.bookstore.rest.product;
 import app.bookstore.BookStoreBaseRestTest;
 import app.bookstore.db.models.ProductRecord;
 import org.assertj.core.api.Assertions;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
 public class ProductControllerResponseTests extends BookStoreBaseRestTest {
@@ -53,5 +54,16 @@ public class ProductControllerResponseTests extends BookStoreBaseRestTest {
 
         Assertions.assertThat(response.getStatusCode())
                 .isEqualTo(200);
+    }
+
+    @AfterClass
+    public void clear() {
+        var productIds = controller.getProducts()
+                .stream()
+                .filter(element -> element.getName().equals("NAME") || element.getName().equals("Product") || element.getName().equals("New Book"))
+                .map(ProductResponse::getId)
+                .toList();
+
+        productIds.forEach(productId -> controller.deleteProductsResponse(productId.toString()));
     }
 }

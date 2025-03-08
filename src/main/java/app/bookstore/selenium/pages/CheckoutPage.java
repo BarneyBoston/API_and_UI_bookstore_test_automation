@@ -196,6 +196,7 @@ public class CheckoutPage extends BasePage {
 
     @Step("Assert that login window is expanded")
     public void assertLoginWindowIsExpanded() {
+        waitForElementToBeVisible(usernameOrEmailField,3);
         SoftAssertions.assertSoftly(softly -> {
             softly.assertThat(usernameOrEmailField.isDisplayed()).isTrue();
             softly.assertThat(passwordField.isDisplayed()).isTrue();
@@ -204,6 +205,7 @@ public class CheckoutPage extends BasePage {
 
     @Step("Assert that coupon window is expanded")
     public void assertCouponWindowIsExpanded() {
+        waitForElementToBeVisible(couponCodeField,3);
         SoftAssertions.assertSoftly(softly -> {
             softly.assertThat(couponCodeField.isDisplayed()).isTrue();
             softly.assertThat(applyCouponButton.isDisplayed()).isTrue();
@@ -212,6 +214,7 @@ public class CheckoutPage extends BasePage {
 
     @Step("Assert that coupon window is expanded")
     public void assertAllElementsAreDisplayed() {
+        waitForElementToBeVisible(billingDetailsSection,3);
         SoftAssertions.assertSoftly(softly -> {
             softly.assertThat(billingDetailsSection.isDisplayed()).isTrue();
             softly.assertThat(checkoutOrderSection.isDisplayed()).isTrue();

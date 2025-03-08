@@ -19,6 +19,7 @@ public class MainPageTests extends BookStoreBaseWebTest {
                 .toList();
 
         var uiTittles = login().getProductTitles();
+        System.out.println("UITITLES" + uiTittles);
 
         assertThat(dbTitles)
                 .containsExactlyInAnyOrderElementsOf(uiTittles)
