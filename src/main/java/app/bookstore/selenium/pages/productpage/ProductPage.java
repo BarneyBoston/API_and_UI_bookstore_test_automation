@@ -164,12 +164,14 @@ public class ProductPage extends BasePage {
     @Step("Assert description text is not empty")
     public void assertDescriptionTabTextIsDisplayed() {
         waitForPageToLoad(3);
+        waitForElementToBeVisible(descriptionTabText,3);
         assertThat(descriptionTabText.getText()).isNotEmpty();
     }
 
     @Step("Assert context tab is displayed")
     public void assertContextTabIsDisplayed() {
         waitForPageToLoad(3);
+        waitForElementToBeVisible(contentsTabSection, 3);
         assertThat(contentsTabSection.isDisplayed()).isTrue();
     }
 

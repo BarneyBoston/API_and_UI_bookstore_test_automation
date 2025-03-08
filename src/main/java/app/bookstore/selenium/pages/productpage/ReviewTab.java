@@ -90,7 +90,9 @@ public class ReviewTab extends BasePage {
 
     @Step("Assert all elements of review tab are displayed")
     public void assertAllElementsAreDisplayed() {
-        waitForPageToLoad(3);
+        waitForElementToBeVisible(reviewTitleText,3);
+        waitForElementToBeVisible(ratingStars.get(0),3);
+        waitForElementToBeVisible(emailField,3);
         SoftAssertions.assertSoftly(softly ->
         {
             softly.assertThat(reviewTitleText.getText()).isEqualTo("Reviews").as("Review title text is not as expected");
