@@ -75,7 +75,7 @@ public class CheckoutPageTests extends BookStoreBaseWebTest {
                 .inputLastNameAs(dataSource.getLast_name())
                 .inputHouseNumberAndStreetNameAs(dataSource.getAddress_1())
                 .inputApartmentSuiteUnitAs(dataSource.getAddress_2())
-                .inputPostcodeAs(dataSource.getPostcode())
+                .inputPostcodeAs("12-123")
                 .inputTownAs(dataSource.getCity())
                 .inputPhoneAs(dataSource.getPhone())
                 .inputEmailAs(dataSource.getEmail())
