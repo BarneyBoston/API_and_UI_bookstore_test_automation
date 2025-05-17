@@ -9,18 +9,23 @@ import io.qameta.allure.Step;
 import java.util.List;
 
 public class BookStoreDB {
-    private static BookStoreDB instance;
+    private final static ThreadLocal<BookStoreDB> bookStoreDb = new ThreadLocal<>();
     private final DBClient database;
 
     private BookStoreDB() {
         database = new DBClient(BookStoreDBAccessDetails.getDbAccessDetails());
     }
 
-    public static synchronized BookStoreDB getInstance() {
-        if (instance == null) {
-            instance = new BookStoreDB();
-        }
-        return instance;
+    public static void init() {
+        bookStoreDb.set(new BookStoreDB());
+    }
+
+    public static void remove() {
+        bookStoreDb.remove();
+    }
+
+    public static BookStoreDB getDb() {
+        return bookStoreDb.get();
     }
 
     @Step("SELECT products")

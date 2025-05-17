@@ -1,6 +1,7 @@
 package app.bookstore.rest.product;
 
 import app.bookstore.BookStoreBaseRestTest;
+import app.bookstore.db.BookStoreDB;
 import app.bookstore.db.models.PostRecord;
 import app.bookstore.db.models.ProductRecord;
 import app.bookstore.rest.utils.DataAssertions;
@@ -36,7 +37,7 @@ public class ProductControllerDataTests extends BookStoreBaseRestTest {
                 .map(parameters.responseMap())
                 .toList();
 
-        var productList = db.selectProducts().stream()
+        var productList = BookStoreDB.getDb().selectProducts().stream()
                 .map(parameters.dbMap())
                 .toList();
 
@@ -59,7 +60,7 @@ public class ProductControllerDataTests extends BookStoreBaseRestTest {
                 .map(parameters.responseMap())
                 .toList();
 
-        var productList = db.selectPosts().stream()
+        var productList = BookStoreDB.getDb().selectPosts().stream()
                 .map(parameters.dbMap())
                 .toList();
 
@@ -73,7 +74,7 @@ public class ProductControllerDataTests extends BookStoreBaseRestTest {
                 .build();
         var responseName = controller.postProducts(request).getName();
 
-        var dbName = db.selectNameFromPosts("NAME")
+        var dbName = BookStoreDB.getDb().selectNameFromPosts("NAME")
                 .stream()
                 .map(PostRecord::getName)
                 .toList()
@@ -84,7 +85,7 @@ public class ProductControllerDataTests extends BookStoreBaseRestTest {
 
     @Test
     public void updateProductDataTest() {
-        var idFromDb = db.selectProducts().stream()
+        var idFromDb = BookStoreDB.getDb().selectProducts().stream()
                 .map(ProductRecord::getProductId)
                 .toList()
                 .get(0);

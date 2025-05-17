@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<suite name="AllTestsSuite" verbose="1">
+<suite name="AllTestsSuite" verbose="1" parallel="methods" thread-count="4">
     <listeners>
         <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
     </listeners>

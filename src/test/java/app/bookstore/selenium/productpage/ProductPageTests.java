@@ -1,6 +1,7 @@
 package app.bookstore.selenium.productpage;
 
 import app.bookstore.BookStoreBaseWebTest;
+import app.bookstore.db.BookStoreDB;
 import app.bookstore.rest.BookStoreController;
 import app.bookstore.rest.product.ProductReviewResponse;
 import org.testng.annotations.AfterMethod;
@@ -17,7 +18,7 @@ public class ProductPageTests extends BookStoreBaseWebTest {
 
     @Test
     public void should_product_page_has_all_elements_test() {
-        var bookName = db.selectRandomActiveProduct().getName();
+        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
         login()
                 .goToProductPage(bookName)
@@ -26,7 +27,7 @@ public class ProductPageTests extends BookStoreBaseWebTest {
 
     @Test
     public void should_verify_product_title_after_navigation_test() {
-        var bookName = db.selectRandomActiveProduct().getName();
+        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
         login()
                 .goToProductPage(bookName)
@@ -35,7 +36,7 @@ public class ProductPageTests extends BookStoreBaseWebTest {
 
     @Test
     public void should_add_to_cart_trigger_notification_test() {
-        var bookName = db.selectRandomActiveProduct().getName();
+        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
         login()
                 .goToProductPage(bookName)
@@ -45,7 +46,7 @@ public class ProductPageTests extends BookStoreBaseWebTest {
 
     @Test
     public void should_go_to_view_cart_from_notification_redirect_test() {
-        var bookName = db.selectRandomActiveProduct().getName();
+        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
         login()
                 .goToProductPage(bookName)
@@ -56,7 +57,7 @@ public class ProductPageTests extends BookStoreBaseWebTest {
 
     @Test
     public void should_input_quantity_as_update_value_test() {
-        var bookName = db.selectRandomActiveProduct().getName();
+        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
         login()
                 .goToProductPage(bookName)
@@ -67,7 +68,7 @@ public class ProductPageTests extends BookStoreBaseWebTest {
 
     @Test
     public void should_increase_quantity_update_value_test() {
-        var bookName = db.selectRandomActiveProduct().getName();
+        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
         login()
                 .goToProductPage(bookName)
@@ -78,7 +79,7 @@ public class ProductPageTests extends BookStoreBaseWebTest {
 
     @Test
     public void should_decrease_quantity_update_value_test() {
-        var bookName = db.selectRandomActiveProduct().getName();
+        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
         login()
                 .goToProductPage(bookName)
@@ -90,7 +91,7 @@ public class ProductPageTests extends BookStoreBaseWebTest {
 
     @Test
     public void should_add_to_wish_list_work_test() {
-        var bookName = db.selectRandomActiveProduct().getName();
+        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
         login()
                 .goToProductPage(bookName)
@@ -101,7 +102,7 @@ public class ProductPageTests extends BookStoreBaseWebTest {
 
     @Test
     public void should_remove_from_wish_list_work_test() {
-        var bookName = db.selectRandomActiveProduct().getName();
+        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
         login()
                 .goToProductPage(bookName)
@@ -114,7 +115,7 @@ public class ProductPageTests extends BookStoreBaseWebTest {
 
     @Test
     public void should_description_tab_be_populated_with_text_test() {
-        var bookName = db.selectRandomActiveProduct().getName();
+        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
         login()
                 .goToProductPage(bookName)
@@ -123,7 +124,7 @@ public class ProductPageTests extends BookStoreBaseWebTest {
 
     @Test
     public void should_contents_tab_content_be_displayed_test() {
-        var bookName = db.selectRandomActiveProduct().getName();
+        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
         login()
                 .goToProductPage(bookName)
@@ -133,7 +134,7 @@ public class ProductPageTests extends BookStoreBaseWebTest {
 
     @Test
     public void should_review_tab_display_all_elements_test() {
-        var bookName = db.selectRandomActiveProduct().getName();
+        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
         login()
                 .goToProductPage(bookName)
@@ -143,7 +144,7 @@ public class ProductPageTests extends BookStoreBaseWebTest {
 
     @Test
     public void should_review_tab_empty_submit_trigger_pop_up_test() {
-        var bookName = db.selectRandomActiveProduct().getName();
+        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
         login()
                 .goToProductPage(bookName)
@@ -154,7 +155,7 @@ public class ProductPageTests extends BookStoreBaseWebTest {
 
     @Test
     public void should_review_tab_with_rating_submit_redirect_to_error_test() {
-        var bookName = db.selectRandomActiveProduct().getName();
+        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
         login()
                 .goToProductPage(bookName)
@@ -166,7 +167,7 @@ public class ProductPageTests extends BookStoreBaseWebTest {
 
     @Test
     public void should_review_tab_with_rating_submit_and_back_redirect_to_description_test() {
-        var bookName = db.selectRandomActiveProduct().getName();
+        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
         login()
                 .goToProductPage(bookName)
@@ -179,7 +180,7 @@ public class ProductPageTests extends BookStoreBaseWebTest {
 
     @Test
     public void should_review_tab_without_name_submit_popup_proper_error_test() {
-        var bookName = db.selectRandomActiveProduct().getName();
+        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
         login()
                 .goToProductPage(bookName)
@@ -192,7 +193,7 @@ public class ProductPageTests extends BookStoreBaseWebTest {
 
     @Test
     public void should_review_tab_with_incorrect_email_submit_popup_proper_error_test() {
-        var bookName = db.selectRandomActiveProduct().getName();
+        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
         login()
                 .goToProductPage(bookName)
@@ -207,7 +208,7 @@ public class ProductPageTests extends BookStoreBaseWebTest {
 
     @Test
     public void should_review_tab_with_correct_details_submitted_add_review_test() {
-        var bookName = db.selectRandomActiveProduct().getName();
+        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
         login()
                 .goToProductPage(bookName)

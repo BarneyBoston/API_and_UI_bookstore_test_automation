@@ -6,11 +6,12 @@ import lombok.Getter;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 @Getter
 @SuppressWarnings("unused")
 public class Config {
-    private static Config instance;
+    private static volatile Config instance;
     private String dbUsername;
     private String dbPassword;
     private String dbConnString;
@@ -21,18 +22,34 @@ public class Config {
     private String browser;
     private Boolean isHeadless;
 
+    private Config() {
+    }
+
     public static Config getInstance() {
         if (instance == null) {
-            ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-            String env = System.getProperty("ENV", "local");
-            String configFilePath = String.format("src/test/resources/config-%s.yaml", env);
-            try {
-                instance = mapper.readValue(new File(configFilePath), Config.class);
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to load configuration file: " + configFilePath, e);
+            synchronized (Config.class) {
+                if (instance == null) {
+                    instance = loadConfig();
+                }
             }
         }
         return instance;
     }
-}
 
+    private static Config loadConfig() {
+        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+
+        String env = System.getProperty("ENV");
+        if (env == null || env.isEmpty()) {
+            env = System.getenv().getOrDefault("ENV", "local");
+        }
+
+        String configFilePath = Paths.get("src", "test", "resources", "config-" + env + ".yaml").toString();
+
+        try {
+            return mapper.readValue(new File(configFilePath), Config.class);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to load configuration file: " + configFilePath, e);
+        }
+    }
+}

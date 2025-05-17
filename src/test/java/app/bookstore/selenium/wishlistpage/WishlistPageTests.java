@@ -1,6 +1,7 @@
 package app.bookstore.selenium.wishlistpage;
 
 import app.bookstore.BookStoreBaseWebTest;
+import app.bookstore.db.BookStoreDB;
 import org.testng.annotations.Test;
 
 public class WishlistPageTests extends BookStoreBaseWebTest {
@@ -14,7 +15,7 @@ public class WishlistPageTests extends BookStoreBaseWebTest {
 
     @Test
     public void should_added_product_clicked_redirect_to_product_page_test() {
-        var bookName = db.selectRandomActiveProduct().getName();
+        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
         login()
                 .goToProductPage(bookName)
@@ -26,7 +27,7 @@ public class WishlistPageTests extends BookStoreBaseWebTest {
 
     @Test
     public void should_add_to_cart_work_test() {
-        var bookName = db.selectRandomActiveProduct().getName();
+        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
         login()
                 .goToProductPage(bookName)

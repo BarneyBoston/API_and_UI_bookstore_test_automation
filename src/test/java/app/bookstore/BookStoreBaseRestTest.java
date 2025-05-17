@@ -7,11 +7,10 @@ import org.testng.annotations.BeforeClass;
 public class BookStoreBaseRestTest {
 
     public BookStoreController controller;
-    public BookStoreDB db;
 
     @BeforeClass
     public void setup() {
         controller = new BookStoreController();
-        db = BookStoreDB.getInstance();
+        BookStoreDB.init();
     }
 }

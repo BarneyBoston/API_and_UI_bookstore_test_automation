@@ -1,7 +1,9 @@
 package app.bookstore.selenium.mainpage;
 
 import app.bookstore.BookStoreBaseWebTest;
+import app.bookstore.db.BookStoreDB;
 import app.bookstore.db.models.PostRecord;
+import app.bookstore.selenium.WebDriverManager;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -13,13 +15,12 @@ public class MainPageTests extends BookStoreBaseWebTest {
 
     @Test
     public void should_all_product_titles_from_ui_match_db() {
-        var dbTitles = db.selectActiveProducts()
+        var dbTitles = BookStoreDB.getDb().selectActiveProducts()
                 .stream()
                 .map(PostRecord::getName)
                 .toList();
 
         var uiTittles = login().getProductTitles();
-        System.out.println("UITITLES" + uiTittles);
 
         assertThat(dbTitles)
                 .containsExactlyInAnyOrderElementsOf(uiTittles)
@@ -55,19 +56,19 @@ public class MainPageTests extends BookStoreBaseWebTest {
 
     @Test
     public void should_search_product_redirect_to_product_page() {
-        var dbTitle = db.selectRandomActiveProduct().getName();
+        var dbTitle = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
         login()
                 .searchForProduct(dbTitle);
 
-        assertThat(driver.getCurrentUrl())
+        assertThat(WebDriverManager.getDriver().getCurrentUrl())
                 .contains("/product")
                 .describedAs("Searching Product should redirect to product page");
     }
 
     @Test
     public void should_add_to_cart_open_cart_preview() {
-        var bookName = db.selectRandomActiveProduct().getName();
+        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
         login()
                 .addToCart(bookName)

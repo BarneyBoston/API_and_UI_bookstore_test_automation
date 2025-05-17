@@ -11,7 +11,9 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 
 public class BrowserFactory {
 
-    static Boolean isHeadless = Config.getInstance().getIsHeadless();
+    private static boolean isHeadless() {
+        return Config.getInstance().getIsHeadless();
+    }
 
     public static WebDriver getBrowser(String browser) throws NoSuchBrowserException {
         switch (browser) {
@@ -31,7 +33,7 @@ public class BrowserFactory {
     private static WebDriver getChromeInstance() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("start-maximized");
-        if (isHeadless) {
+        if (isHeadless()) {
             options.addArguments("--headless=new");
         }
         return new ChromeDriver(options);
@@ -40,7 +42,7 @@ public class BrowserFactory {
     private static WebDriver getFirefoxInstance() {
         FirefoxOptions options = new FirefoxOptions();
         options.addArguments("--start-maximized");
-        if (isHeadless) {
+        if (isHeadless()) {
             options.addArguments("--headless");
         }
         return new FirefoxDriver(options);
@@ -49,7 +51,7 @@ public class BrowserFactory {
     private static WebDriver getEdgeInstance() {
         EdgeOptions options = new EdgeOptions();
         options.addArguments("start-maximized");
-        if (isHeadless) {
+        if (isHeadless()) {
             options.addArguments("--headless=new");
         }
         return new EdgeDriver(options);

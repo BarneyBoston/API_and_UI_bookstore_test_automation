@@ -1,6 +1,7 @@
 package app.bookstore.rest.orders;
 
 import app.bookstore.BookStoreBaseRestTest;
+import app.bookstore.db.BookStoreDB;
 import app.bookstore.db.models.PostRecord;
 import app.bookstore.rest.utils.DataAssertions;
 import org.testng.annotations.Test;
@@ -31,7 +32,7 @@ public class OrdersControllerDataTests extends BookStoreBaseRestTest {
             controller.postOrdersResponse(request);
         }
         var idList = controller.getOrders().stream().map(OrdersResponse::getId).toList();
-        var dbList = db.selectOrders().stream().map(PostRecord::getId).toList();
+        var dbList = BookStoreDB.getDb().selectOrders().stream().map(PostRecord::getId).toList();
 
         DataAssertions.verifyThatAPIvsDBListContains(idList, dbList);
     }

@@ -1,6 +1,7 @@
 package app.bookstore.rest.product;
 
 import app.bookstore.BookStoreBaseRestTest;
+import app.bookstore.db.BookStoreDB;
 import app.bookstore.db.models.ProductRecord;
 import org.assertj.core.api.Assertions;
 import org.testng.annotations.AfterClass;
@@ -28,7 +29,7 @@ public class ProductControllerResponseTests extends BookStoreBaseRestTest {
 
     @Test
     public void updateProductResponseTest() {
-        var idFromDb = db.selectProducts().stream()
+        var idFromDb = BookStoreDB.getDb().selectProducts().stream()
                 .map(ProductRecord::getProductId)
                 .toList()
                 .get(0);
