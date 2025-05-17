@@ -7,7 +7,7 @@ services:
     image: testelkapl/test-bookstore-wordpress:2.0
     restart: always
     ports:
-      - 8080:80
+      - 8888:80     # ← zmieniono z 8080:80 na 8888:80
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: wordpress
@@ -22,14 +22,14 @@ services:
     image: testelkapl/test-bookstore-mysql:2.0
     restart: always
     ports:
-      - "3306:3306"  
+      - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
     cap_add:
-      - SYS_NICE  # CAP_SYS_NICE
+      - SYS_NICE
     networks:
       - wpsite
-      
+
   phpmyadmin:
     depends_on:
       - db
@@ -39,12 +39,13 @@ services:
       - 8000:80
     environment:
       PMA_USER: wordpress
-      PMA_PASSWORD: wordpress 
+      PMA_PASSWORD: wordpress
     networks:
       - wpsite
+
 networks:
   wpsite:
+
 volumes:
   db_data: {}
   wordpress_data: {}
-      
