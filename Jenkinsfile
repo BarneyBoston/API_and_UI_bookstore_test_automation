@@ -15,21 +15,19 @@ pipeline {
     stages {
         stage('Start Docker Compose') {
             steps {
-                sh 'docker-compose up -d'
-
-                sh 'sleep 20'
+                bat 'docker-compose up -d'
             }
         }
 
         stage('Compile') {
             steps {
-                sh 'mvn clean install -DskipTests'
+                bat 'mvn clean install -DskipTests'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'mvn test -Dsurefire.suiteXmlFiles=src/test/resources/testng.xml -DENV=${ENV}'
+                bat 'mvn test -Dsurefire.suiteXmlFiles=src/test/resources/testng.xml -DENV=%ENV%'
             }
         }
     }
@@ -50,7 +48,7 @@ pipeline {
             ])
         }
         always {
-            sh 'docker-compose down'
+            bat 'docker-compose down'
         }
     }
 }
