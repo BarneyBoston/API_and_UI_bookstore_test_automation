@@ -7,7 +7,7 @@ services:
     image: testelkapl/test-bookstore-wordpress:2.0
     restart: always
     ports:
-      - 8888:80     # ← zmieniono z 8080:80 na 8888:80
+      - 8889:80
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: wordpress
