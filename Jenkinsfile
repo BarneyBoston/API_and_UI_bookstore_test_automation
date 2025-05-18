@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        label 'WindowsAgent'
-    }
+    agent any
 
     environment {
         ENV = 'jenkins'
