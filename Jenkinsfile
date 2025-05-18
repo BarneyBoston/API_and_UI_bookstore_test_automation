@@ -33,12 +33,7 @@ pipeline {
     }
 
     post {
-        success {
-            emailext to: 'sampleEmail@gmail.com',
-                     mimeType: 'text/html',
-                     subject: 'Test Results',
-                     body: '${FILE,path="target/surefire-reports/email-report.html"}'
-
+        always {
             allure([
                 includeProperties: false,
                 jdk              : '',
@@ -46,8 +41,6 @@ pipeline {
                 reportBuildPolicy: 'ALWAYS',
                 results          : [[path: 'target/allure-results']]
             ])
-        }
-        always {
             bat 'docker-compose down'
         }
     }
