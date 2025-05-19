@@ -34,13 +34,14 @@ pipeline {
 
     post {
         always {
-            allure([
-                includeProperties: false,
-                jdk              : '',
-                properties       : [],
-                reportBuildPolicy: 'ALWAYS',
-                results          : [[path: 'target/allure-results']]
-            ])
+           allure([
+               commandline: 'allure',
+               includeProperties: false,
+               jdk              : '',
+               properties       : [],
+               reportBuildPolicy: 'ALWAYS',
+               results          : [[path: 'target/allure-results']]
+           ])
             bat 'docker-compose down'
         }
     }
