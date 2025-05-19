@@ -7,7 +7,7 @@ services:
     image: barneyboston/test-bookstore-wordpress:2.0
     restart: always
     ports:
-      - 8889:80
+      - 8080:80
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: wordpress
