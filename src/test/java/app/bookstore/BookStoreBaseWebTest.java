@@ -10,6 +10,7 @@ import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -29,7 +30,9 @@ public abstract class BookStoreBaseWebTest {
 
     protected MainPage login() {
         WebDriverManager.getDriver().get(Config.getInstance().getBaseUrl());
-        return PageFactory.initElements(WebDriverManager.getDriver(), MainPage.class);
+        MainPage mainPage = new MainPage(WebDriverManager.getDriver());
+        PageFactory.initElements(new AjaxElementLocatorFactory(WebDriverManager.getDriver(), 10), mainPage);
+        return mainPage;
     }
 
     @AfterMethod
