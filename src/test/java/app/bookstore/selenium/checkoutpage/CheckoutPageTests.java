@@ -2,9 +2,11 @@ package app.bookstore.selenium.checkoutpage;
 
 import app.bookstore.BookStoreBaseWebTest;
 import app.bookstore.rest.BookStoreController;
+import io.qameta.allure.Epic;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+@Epic("Checkout Page Tests")
 public class CheckoutPageTests extends BookStoreBaseWebTest {
 
     BookStoreController controller;
@@ -14,14 +16,14 @@ public class CheckoutPageTests extends BookStoreBaseWebTest {
         controller = new BookStoreController();
     }
 
-    @Test
+    @Test(description = "Verify that all essential elements are displayed on the checkout page")
     public void should_all_elements_be_displayed_test() {
         login()
                 .goToCheckOutPage()
                 .assertAllElementsAreDisplayed();
     }
 
-    @Test
+    @Test(description = "Verify that clicking 'Click here to login' expands the login window")
     public void should_click_here_to_login_expand_login_window_test() {
         login()
                 .goToCheckOutPage()
@@ -29,7 +31,7 @@ public class CheckoutPageTests extends BookStoreBaseWebTest {
                 .assertLoginWindowIsExpanded();
     }
 
-    @Test
+    @Test(description = "Verify that clicking 'Click here to enter your code' expands the coupon code window")
     public void should_click_here_to_enter_your_code_expand_coupon_window_test() {
         login()
                 .goToCheckOutPage()
@@ -37,7 +39,7 @@ public class CheckoutPageTests extends BookStoreBaseWebTest {
                 .assertCouponWindowIsExpanded();
     }
 
-    @Test
+    @Test(description = "Verify that placing an order without required fields shows card error")
     public void should_place_order_without_required_fields_fail_test() {
         login()
                 .goToCheckOutPage()
@@ -45,7 +47,7 @@ public class CheckoutPageTests extends BookStoreBaseWebTest {
                 .assertCardErrorMessageIs("The card number is incomplete.");
     }
 
-    @Test
+    @Test(description = "Verify placing order with card details but missing billing info shows appropriate errors")
     public void should_place_order_with_card_details_point_to_other_required_fields_test() {
         String expectedErrorMessage = """
                 Billing First name is a required field.
@@ -65,7 +67,7 @@ public class CheckoutPageTests extends BookStoreBaseWebTest {
                 .assertDetailsErrorMessageIs(expectedErrorMessage);
     }
 
-    @Test
+    @Test(description = "Verify placing a correct order works successfully")
     public void should_place_correct_order_work_test() {
         var dataSource = controller.getOrders().get(0).getBilling();
 

@@ -4,39 +4,45 @@ import app.bookstore.BookStoreBaseWebTest;
 import app.bookstore.db.BookStoreDB;
 import app.bookstore.rest.BookStoreController;
 import app.bookstore.rest.product.ProductReviewResponse;
+import io.qameta.allure.Epic;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+@Epic("Product Page Tests")
 public class ProductPageTests extends BookStoreBaseWebTest {
-    public BookStoreController controller;
+    private BookStoreController controller;
 
-    @BeforeClass
+    @BeforeMethod
     public void setUpController() {
         controller = new BookStoreController();
     }
 
-    @Test
+    private String getRandomBookName() {
+        return BookStoreDB.getDb().selectRandomActiveProduct().getName();
+    }
+
+    @Test(description = "Verify product page displays all expected elements")
     public void should_product_page_has_all_elements_test() {
-        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
+        var bookName = getRandomBookName();
 
         login()
                 .goToProductPage(bookName)
                 .assertAllElementsAreDisplayed();
     }
 
-    @Test
+    @Test(description = "Verify product title is correct after navigation")
     public void should_verify_product_title_after_navigation_test() {
-        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
+        var bookName = getRandomBookName();
 
         login()
                 .goToProductPage(bookName)
                 .assertThatProductTextIs(bookName);
     }
 
-    @Test
+    @Test(description = "Adding product to cart triggers notification popup with product name")
     public void should_add_to_cart_trigger_notification_test() {
-        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
+        var bookName = getRandomBookName();
 
         login()
                 .goToProductPage(bookName)
@@ -44,9 +50,9 @@ public class ProductPageTests extends BookStoreBaseWebTest {
                 .assertViewCartPopUpIsDisplayedAndTextIs(bookName);
     }
 
-    @Test
+    @Test(description = "Clicking view cart from notification redirects to cart page")
     public void should_go_to_view_cart_from_notification_redirect_test() {
-        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
+        var bookName = getRandomBookName();
 
         login()
                 .goToProductPage(bookName)
@@ -55,9 +61,9 @@ public class ProductPageTests extends BookStoreBaseWebTest {
                 .assertCartTextIsDisplayed();
     }
 
-    @Test
+    @Test(description = "Inputting quantity updates the quantity value")
     public void should_input_quantity_as_update_value_test() {
-        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
+        var bookName = getRandomBookName();
 
         login()
                 .goToProductPage(bookName)
@@ -66,9 +72,9 @@ public class ProductPageTests extends BookStoreBaseWebTest {
                 .assertQuantityIs("5");
     }
 
-    @Test
+    @Test(description = "Increasing quantity updates the quantity value accordingly")
     public void should_increase_quantity_update_value_test() {
-        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
+        var bookName = getRandomBookName();
 
         login()
                 .goToProductPage(bookName)
@@ -77,9 +83,9 @@ public class ProductPageTests extends BookStoreBaseWebTest {
                 .assertQuantityIs("4");
     }
 
-    @Test
+    @Test(description = "Decreasing quantity updates the quantity value accordingly")
     public void should_decrease_quantity_update_value_test() {
-        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
+        var bookName = getRandomBookName();
 
         login()
                 .goToProductPage(bookName)
@@ -89,9 +95,9 @@ public class ProductPageTests extends BookStoreBaseWebTest {
                 .assertQuantityIs("2");
     }
 
-    @Test
+    @Test(description = "Adding product to wishlist and verifying it appears there")
     public void should_add_to_wish_list_work_test() {
-        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
+        var bookName = getRandomBookName();
 
         login()
                 .goToProductPage(bookName)
@@ -100,9 +106,9 @@ public class ProductPageTests extends BookStoreBaseWebTest {
                 .assertProductIsAddedToWishList(bookName);
     }
 
-    @Test
+    @Test(description = "Removing product from wishlist and verifying wishlist is empty")
     public void should_remove_from_wish_list_work_test() {
-        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
+        var bookName = getRandomBookName();
 
         login()
                 .goToProductPage(bookName)
@@ -113,18 +119,18 @@ public class ProductPageTests extends BookStoreBaseWebTest {
                 .assertNoProductsAreAddedToWishList();
     }
 
-    @Test
+    @Test(description = "Description tab has text content displayed")
     public void should_description_tab_be_populated_with_text_test() {
-        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
+        var bookName = getRandomBookName();
 
         login()
                 .goToProductPage(bookName)
                 .assertDescriptionTabTextIsDisplayed();
     }
 
-    @Test
+    @Test(description = "Contents tab displays its content when clicked")
     public void should_contents_tab_content_be_displayed_test() {
-        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
+        var bookName = getRandomBookName();
 
         login()
                 .goToProductPage(bookName)
@@ -132,9 +138,9 @@ public class ProductPageTests extends BookStoreBaseWebTest {
                 .assertContextTabIsDisplayed();
     }
 
-    @Test
+    @Test(description = "Review tab displays all necessary elements")
     public void should_review_tab_display_all_elements_test() {
-        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
+        var bookName = getRandomBookName();
 
         login()
                 .goToProductPage(bookName)
@@ -142,9 +148,9 @@ public class ProductPageTests extends BookStoreBaseWebTest {
                 .assertAllElementsAreDisplayed();
     }
 
-    @Test
+    @Test(description = "Submitting review with empty rating triggers alert")
     public void should_review_tab_empty_submit_trigger_pop_up_test() {
-        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
+        var bookName = getRandomBookName();
 
         login()
                 .goToProductPage(bookName)
@@ -153,9 +159,9 @@ public class ProductPageTests extends BookStoreBaseWebTest {
                 .assertPleaseSelectRatingAlertIsDisplayed();
     }
 
-    @Test
+    @Test(description = "Submitting review with rating but missing required fields shows error")
     public void should_review_tab_with_rating_submit_redirect_to_error_test() {
-        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
+        var bookName = getRandomBookName();
 
         login()
                 .goToProductPage(bookName)
@@ -165,9 +171,9 @@ public class ProductPageTests extends BookStoreBaseWebTest {
                 .assertErrorTextIs("Error: Please fill the required fields.");
     }
 
-    @Test
+    @Test(description = "Submitting review with rating and back button redirects to description tab")
     public void should_review_tab_with_rating_submit_and_back_redirect_to_description_test() {
-        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
+        var bookName = getRandomBookName();
 
         login()
                 .goToProductPage(bookName)
@@ -178,9 +184,9 @@ public class ProductPageTests extends BookStoreBaseWebTest {
                 .assertDescriptionTabTextIsDisplayed();
     }
 
-    @Test
+    @Test(description = "Submitting review without name triggers proper error popup")
     public void should_review_tab_without_name_submit_popup_proper_error_test() {
-        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
+        var bookName = getRandomBookName();
 
         login()
                 .goToProductPage(bookName)
@@ -191,9 +197,9 @@ public class ProductPageTests extends BookStoreBaseWebTest {
                 .assertErrorTextIs("Error: Please fill the required fields.");
     }
 
-    @Test
+    @Test(description = "Submitting review with incorrect email triggers error popup")
     public void should_review_tab_with_incorrect_email_submit_popup_proper_error_test() {
-        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
+        var bookName = getRandomBookName();
 
         login()
                 .goToProductPage(bookName)
@@ -206,9 +212,9 @@ public class ProductPageTests extends BookStoreBaseWebTest {
                 .assertErrorTextIs("Error: Please enter a valid email address.");
     }
 
-    @Test
+    @Test(description = "Submitting review with correct details adds review and awaits approval")
     public void should_review_tab_with_correct_details_submitted_add_review_test() {
-        var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
+        var bookName = getRandomBookName();
 
         login()
                 .goToProductPage(bookName)
@@ -229,5 +235,4 @@ public class ProductPageTests extends BookStoreBaseWebTest {
             reviewIds.forEach(reviewId -> controller.deleteReviews(reviewId, true));
         }
     }
-
 }

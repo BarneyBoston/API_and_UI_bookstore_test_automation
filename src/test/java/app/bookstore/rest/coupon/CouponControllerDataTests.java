@@ -1,6 +1,7 @@
 package app.bookstore.rest.coupon;
 
 import app.bookstore.BookStoreBaseRestTest;
+import io.qameta.allure.Epic;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.testng.annotations.AfterClass;
@@ -8,9 +9,10 @@ import org.testng.annotations.Test;
 
 import java.util.Random;
 
+@Epic("Coupon Controller Data Tests")
 public class CouponControllerDataTests extends BookStoreBaseRestTest {
 
-    @Test(priority = 1)
+    @Test(priority = 1, description = "Create a new coupon and verify its code, amount and status")
     public void postCouponDataTest() {
         var number = String.valueOf(Math.abs(new Random().nextInt()));
         var request = PostCouponRequest.builder()
@@ -29,7 +31,7 @@ public class CouponControllerDataTests extends BookStoreBaseRestTest {
         softly.assertAll();
     }
 
-    @Test(priority = 2)
+    @Test(priority = 2, description = "Retrieve all coupons and verify the response is not empty")
     public void getCouponDataTest() {
         var response = controller.getCoupon();
 
@@ -38,7 +40,7 @@ public class CouponControllerDataTests extends BookStoreBaseRestTest {
                 .isNotEmpty();
     }
 
-    @Test(priority = 3)
+    @Test(priority = 3, description = "Update the amount of an existing coupon and verify the update")
     public void updateCouponDataTest() {
         var couponId = controller.getCoupon().stream().map(CouponResponse::getId).toList().get(0);
 
@@ -53,7 +55,7 @@ public class CouponControllerDataTests extends BookStoreBaseRestTest {
                 .isEqualTo("10.00");
     }
 
-    @Test(priority = 4)
+    @Test(priority = 4, description = "Delete a coupon and verify the coupons list is empty")
     public void deleteCouponDataTest() {
         var couponId = controller.getCoupon().stream().map(CouponResponse::getId).toList().get(0);
 

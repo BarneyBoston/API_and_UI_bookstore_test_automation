@@ -6,12 +6,14 @@ import app.bookstore.db.models.PostRecord;
 import app.bookstore.rest.BookStoreController;
 import app.bookstore.rest.coupon.CouponResponse;
 import app.bookstore.rest.coupon.PostCouponRequest;
+import io.qameta.allure.Epic;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
+@Epic("Cart Page Tests")
 public class CartPageTests extends BookStoreBaseWebTest {
     public BookStoreController controller;
 
@@ -27,14 +29,14 @@ public class CartPageTests extends BookStoreBaseWebTest {
         controller.postCoupon(request);
     }
 
-    @Test
+    @Test(description = "Verify all essential UI elements are visible on the cart page.")
     public void should_cart_page_have_proper_elements_test() {
         login()
                 .goToCartPage()
                 .assertAllElementsAreDisplayed();
     }
 
-    @Test
+    @Test(description = "Ensure product name in the cart matches the selected product.")
     public void should_product_name_match_chosen_product_test() {
         var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
@@ -43,7 +45,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
                 .assertProductNameMatchChosenProduct(bookName);
     }
 
-    @Test
+    @Test(description = "Ensure names of multiple products in the cart match the ones selected.")
     public void should_multiple_product_names_match_chosen_products_test() {
         var bookNames = BookStoreDB.getDb().selectActiveProducts().stream().map(PostRecord::getName).toList();
         var bookName1 = bookNames.get(0);
@@ -60,7 +62,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
                 .assertProductNamesMatchChosenProducts(List.of(bookName1, bookName2));
     }
 
-    @Test
+    @Test(description = "Verify update cart triggers confirmation message after quantity change.")
     public void should_update_cart_trigger_pop_up_test() {
         var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
@@ -71,7 +73,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
                 .assertMessageIs("Cart updated");
     }
 
-    @Test
+    @Test(description = "Verify that 'Update Cart' button is disabled before any change.")
     public void should_update_cart_without_prior_updated_be_disabled_test() {
         var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
@@ -80,7 +82,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
                 .assertUpdateCartButtonIsDisabled();
     }
 
-    @Test
+    @Test(description = "Verify increasing quantity for one product is correctly reflected in the cart.")
     public void should_increase_quantity_for_one_product_work_test() {
         var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
@@ -91,7 +93,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
                 .assertQuantityIs(0, "3");
     }
 
-    @Test
+    @Test(description = "Verify increasing quantity for multiple products is correctly updated.")
     public void should_increase_quantity_for_multiple_products_work_test() {
         var bookNames = BookStoreDB.getDb().selectActiveProducts().stream().map(PostRecord::getName).toList();
         var bookName1 = bookNames.get(0);
@@ -112,7 +114,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
                 .assertQuantityIs(1, "5");
     }
 
-    @Test
+    @Test(description = "Verify reducing quantity for a single product updates correctly.")
     public void should_reduce_quantity_for_one_product_work_test() {
         var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
@@ -124,7 +126,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
                 .assertQuantityIs(0, "4");
     }
 
-    @Test
+    @Test(description = "Verify reducing quantity for multiple products updates the cart correctly.")
     public void should_reduce_quantity_for_multiple_products_work_test() {
         var bookNames = BookStoreDB.getDb().selectActiveProducts().stream().map(PostRecord::getName).toList();
         var bookName1 = bookNames.get(0);
@@ -147,7 +149,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
                 .assertQuantityIs(1, "3");
     }
 
-    @Test
+    @Test(description = "Verify that entering a specific quantity directly into the input works as expected.")
     public void should_input_quantity_for_product_work_test() {
         var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
@@ -158,7 +160,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
                 .assertQuantityIs(0, "55");
     }
 
-    @Test
+    @Test(description = "Verify that changing quantity updates the product subtotal correctly.")
     public void should_update_quantity_update_subtotal_for_product_test() {
         var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
@@ -169,7 +171,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
                 .assertSubTotalChangedToExpected(0);
     }
 
-    @Test
+    @Test(description = "Ensure the total cart amount updates correctly after quantity changes.")
     public void should_update_quantity_update_cart_total_test() {
         var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
@@ -180,7 +182,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
                 .assertCartTotalsChangedAsExpected(0);
     }
 
-    @Test
+    @Test(description = "Verify a correct coupon code is applied successfully.")
     public void should_correct_coupon_work_test() {
         var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
@@ -191,7 +193,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
                 .assertMessageIs("Coupon code applied successfully.");
     }
 
-    @Test
+    @Test(description = "Verify using an invalid coupon code results in appropriate error message.")
     public void should_incorrect_coupon_work_test() {
         var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
         var couponCode = "incorrectCoupon";
@@ -203,7 +205,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
                 .assertErrorIs(String.format("Coupon \"%s\" does not exist!", couponCode));
     }
 
-    @Test
+    @Test(description = "Verify that clicking 'Proceed to Checkout' navigates to the checkout page.")
     public void should_proceed_to_checkout_work_test() {
         var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 

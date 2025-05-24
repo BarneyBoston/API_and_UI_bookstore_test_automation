@@ -1,14 +1,16 @@
 package app.bookstore.rest.customers;
 
 import app.bookstore.BookStoreBaseRestTest;
+import io.qameta.allure.Epic;
 import org.assertj.core.api.SoftAssertions;
 import org.testng.annotations.Test;
 
 import java.util.UUID;
 
+@Epic("Customers Controller Data Tests")
 public class CustomersControllerDataTests extends BookStoreBaseRestTest {
 
-    @Test()
+    @Test(description = "Post new customer data and verify email and username correctness")
     public void postCustomersDataTest() {
         String randomString = UUID.randomUUID().toString().replace("-", "").substring(0, 4);
         CustomersRequest request = CustomersRequest.builder()

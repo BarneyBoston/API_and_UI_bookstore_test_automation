@@ -4,13 +4,15 @@ import app.bookstore.BookStoreBaseRestTest;
 import app.bookstore.db.BookStoreDB;
 import app.bookstore.db.models.PostRecord;
 import app.bookstore.rest.utils.DataAssertions;
+import io.qameta.allure.Epic;
 import org.testng.annotations.Test;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+@Epic("Orders Controller Data Tests")
 public class OrdersControllerDataTests extends BookStoreBaseRestTest {
 
-    @Test()
+    @Test(description = "Verify that list of orders from API matches orders from the database")
     public void ordersDataVsDbTest() {
         var request = PostOrdersRequest.builder()
                 .billing(Billing.builder()

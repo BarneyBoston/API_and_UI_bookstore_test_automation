@@ -12,7 +12,9 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import io.qameta.allure.Epic;
 
+@Epic("Product Controller Data Tests")
 public class ProductControllerDataTests extends BookStoreBaseRestTest {
 
     private ProductControllerParametersFactory parametersFactory;
@@ -31,7 +33,7 @@ public class ProductControllerDataTests extends BookStoreBaseRestTest {
         );
     }
 
-    @Test(dataProvider = "productData")
+    @Test(dataProvider = "productData", description = "Verify product data from API matches product data from DB")
     public <T> void productDataTest(DataTestParameters<ProductResponse, ProductRecord, T> parameters) {
         var responseList = controller.getProducts().stream()
                 .map(parameters.responseMap())
@@ -54,7 +56,7 @@ public class ProductControllerDataTests extends BookStoreBaseRestTest {
         );
     }
 
-    @Test(dataProvider = "postData")
+    @Test(dataProvider = "postData", description = "Verify posted product data from API matches post records from DB")
     public <T> void postDataTest(DataTestParameters<ProductResponse, PostRecord, T> parameters) {
         var responseList = controller.getProducts().stream()
                 .map(parameters.responseMap())
@@ -67,7 +69,7 @@ public class ProductControllerDataTests extends BookStoreBaseRestTest {
         DataAssertions.verifyThatAPIvsDBListContains(responseList, productList);
     }
 
-    @Test
+    @Test(description = "Verify that posting a product with name 'NAME' matches the DB record")
     public void postProductNameTest() {
         var request = ProductRequest.builder()
                 .name("NAME")
@@ -83,7 +85,7 @@ public class ProductControllerDataTests extends BookStoreBaseRestTest {
         AssertionsForInterfaceTypes.assertThat(responseName).isEqualTo(dbName);
     }
 
-    @Test
+    @Test(description = "Verify that updating a product price updates the price correctly")
     public void updateProductDataTest() {
         var idFromDb = BookStoreDB.getDb().selectProducts().stream()
                 .map(ProductRecord::getProductId)
