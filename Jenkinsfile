@@ -34,12 +34,10 @@ pipeline {
 
     post {
         always {
-            steps {
-                bat """
-                if not exist target\\allure-results mkdir target\\allure-results
-                echo ENV=%ENV% > target\\allure-results\\environment.properties
-                """
-            }
+            bat """
+            if not exist target\\allure-results mkdir target\\allure-results
+            echo ENV=%ENV% > target\\allure-results\\environment.properties
+            """
             allure([
                 commandline: 'allure',
                 includeProperties: false,
