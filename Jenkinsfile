@@ -4,7 +4,7 @@ pipeline {
     }
 
     environment {
-        ENV = 'jenkins'
+        ENV = 'remote'
     }
 
     options {
