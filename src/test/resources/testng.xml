@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<suite name="AllTestsSuite" verbose="1" parallel="classes" thread-count="4">
+<suite name="Bookstore Regression" verbose="1" parallel="classes" thread-count="4">
     <listeners>
         <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
     </listeners>
