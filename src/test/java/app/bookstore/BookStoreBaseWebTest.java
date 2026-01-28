@@ -7,6 +7,7 @@ import app.bookstore.selenium.helpers.BrowserFactory;
 import app.bookstore.selenium.helpers.NoSuchBrowserException;
 import app.bookstore.selenium.pages.MainPage;
 import io.qameta.allure.Attachment;
+import io.qameta.allure.Step;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.support.PageFactory;
@@ -28,6 +29,7 @@ public abstract class BookStoreBaseWebTest {
         BookStoreDB.init();
     }
 
+    @Step("Login to main page")
     protected MainPage login() {
         WebDriverManager.getDriver().get(Config.getInstance().getBaseUrl());
         MainPage mainPage = new MainPage(WebDriverManager.getDriver());
@@ -37,10 +39,8 @@ public abstract class BookStoreBaseWebTest {
 
     @AfterMethod
     public void tearDown(ITestResult testResult) {
-        if (!testResult.isSuccess() && testResult.getStatus() != ITestResult.SKIP) {
-            if (WebDriverManager.getDriver() != null) {
-                saveScreenshot();
-            }
+        if (!testResult.isSuccess() && testResult.getStatus() != ITestResult.SKIP && WebDriverManager.getDriver() != null) {
+            saveScreenshot();
         }
         if (WebDriverManager.getDriver() != null)
             WebDriverManager.quitDriver();
