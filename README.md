@@ -1,6 +1,6 @@
 # How to install bookstore app on your own
 
-Follow this link for step by step instruction: https://testapka.testelka.pl/apka?recordId=recUKkx3sDu1sE3Bd
+Follow this link for step by step instruction: [https://testapka.testelka.pl/apka?recordId=recUKkx3sDu1sE3Bd](https://github.com/Testelka/test-bookstore)
 
 # API and UI bookstore test automation
 
