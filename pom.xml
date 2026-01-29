@@ -15,16 +15,16 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <aspectj.version>1.9.22.1</aspectj.version>
         <!-- REST -->
-        <httpclient.version>5.4-alpha1</httpclient.version>
+        <httpclient.version>5.6</httpclient.version>
         <httpcore.version>4.4.16</httpcore.version>
-        <restassured.version>5.4.0</restassured.version>
+        <restassured.version>6.0.0</restassured.version>
         <!-- SELENIUM -->
-        <selenium.version>4.29.0</selenium.version>
+        <selenium.version>4.40.0</selenium.version>
         <!-- oauth connection library -->
         <oauthsgignpost.version>2.1.1</oauthsgignpost.version>
         <!-- UTILITIES -->
         <testng.version>7.10.2</testng.version>
-        <assertj.version>3.26.3</assertj.version>
+        <assertj.version>3.27.7</assertj.version>
         <lombok.version>1.18.36</lombok.version>
         <!-- LOGGING -->
         <slf4j.version>2.0.16</slf4j.version>
