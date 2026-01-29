@@ -1,6 +1,6 @@
-# How to install bookstore app on your own
+# Bookstore app available online
 
-Follow this link for step by step instruction: https://testapka.testelka.pl/apka?recordId=recUKkx3sDu1sE3Bd
+Url: https://fakestore.testelka.pl/
 
 # API and UI bookstore test automation
 
