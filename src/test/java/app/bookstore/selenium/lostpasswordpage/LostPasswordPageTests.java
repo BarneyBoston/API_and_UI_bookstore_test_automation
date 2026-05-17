@@ -9,14 +9,14 @@ public class LostPasswordPageTests extends BookStoreBaseWebTest {
 
     @Test(description = "Verify that Lost Password page displays all expected elements")
     public void should_lost_password_page_have_all_expected_elements_test() {
-        login()
+        mainPage
                 .goToLostPasswordPage()
                 .assertAllElementsAreDisplayed();
     }
 
     @Test(description = "Verify that submitting incorrect username or email shows error message")
     public void should_incorrect_username_or_email_fail_test() {
-        login()
+        mainPage
                 .goToLostPasswordPage()
                 .inputUsernameOrEmail("incorrectUsername")
                 .resetPassword()
@@ -25,7 +25,7 @@ public class LostPasswordPageTests extends BookStoreBaseWebTest {
 
     @Test(description = "Verify that submitting correct username or email shows success message")
     public void should_correct_username_or_email_work_test() {
-        login()
+        mainPage
                 .goToLostPasswordPage()
                 .inputUsernameOrEmail("admin")
                 .resetPassword()

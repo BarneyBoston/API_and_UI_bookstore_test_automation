@@ -1,10 +1,12 @@
 package app.bookstore.selenium.pages;
 
+import app.bookstore.selenium.WebDriverManager;
 import app.bookstore.selenium.dto.HasNavigationBar;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -25,7 +27,7 @@ public abstract class BasePage implements HasNavigationBar {
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(driver, this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
     }
 
     @Override

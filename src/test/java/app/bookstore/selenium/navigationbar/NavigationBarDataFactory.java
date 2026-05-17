@@ -8,33 +8,33 @@ import java.util.function.Supplier;
 
 public class NavigationBarDataFactory {
 
-    private final Supplier<MainPage> loginSupplier;
+    private final Supplier<MainPage> mainPageSupplier;
 
     public NavigationBarDataFactory(Supplier<MainPage> loginSupplier) {
-        this.loginSupplier = loginSupplier;
+        this.mainPageSupplier = loginSupplier;
     }
 
     public NamedPageNavigation<MainPage> mainPage() {
-        return new NamedPageNavigation<>("MainPage", loginSupplier);
+        return new NamedPageNavigation<>("MainPage", mainPageSupplier);
     }
 
     public NamedPageNavigation<CartPage> cartPage() {
-        return new NamedPageNavigation<>("CartPage", () -> loginSupplier.get().goToCartPage());
+        return new NamedPageNavigation<>("CartPage", () -> mainPageSupplier.get().goToCartPage());
     }
 
     public NamedPageNavigation<LostPasswordPage> lostPasswordPage() {
-        return new NamedPageNavigation<>("LostPasswordPage", () -> loginSupplier.get().goToLostPasswordPage());
+        return new NamedPageNavigation<>("LostPasswordPage", () -> mainPageSupplier.get().goToLostPasswordPage());
     }
 
     public NamedPageNavigation<MyAccountPage> myAccountPage() {
-        return new NamedPageNavigation<>("MyAccountPage", () -> loginSupplier.get().goToMyAccountPage());
+        return new NamedPageNavigation<>("MyAccountPage", () -> mainPageSupplier.get().goToMyAccountPage());
     }
 
     public NamedPageNavigation<ProductPage> productPage() {
-        return new NamedPageNavigation<>("ProductPage", () -> loginSupplier.get().goToRandomProductPage());
+        return new NamedPageNavigation<>("ProductPage", () -> mainPageSupplier.get().goToRandomProductPage());
     }
 
     public NamedPageNavigation<WishlistPage> wishlistPage() {
-        return new NamedPageNavigation<>("WishlistPage", () -> loginSupplier.get().goToWishlistPage());
+        return new NamedPageNavigation<>("WishlistPage", () -> mainPageSupplier.get().goToWishlistPage());
     }
 }

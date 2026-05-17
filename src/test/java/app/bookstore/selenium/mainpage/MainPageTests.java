@@ -22,7 +22,7 @@ public class MainPageTests extends BookStoreBaseWebTest {
                 .map(PostRecord::getName)
                 .toList();
 
-        var uiTitles = login().getProductTitles();
+        var uiTitles = mainPage.getProductTitles();
 
         assertThat(dbTitles)
                 .containsExactlyInAnyOrderElementsOf(uiTitles)
@@ -31,7 +31,7 @@ public class MainPageTests extends BookStoreBaseWebTest {
 
     @Test(description = "Verify that default sorting option sorts products correctly")
     public void sort_by_default() {
-        var uiTitles = login()
+        var uiTitles = mainPage
                 .selectSortingOption("Default sorting")
                 .getProductTitles();
 
@@ -48,7 +48,7 @@ public class MainPageTests extends BookStoreBaseWebTest {
 
     @Test(dataProvider = "sorting_options", description = "Verify sorting by price works as expected")
     public void sort_by(String sortingOption, Comparator<Double> comparator) {
-        var prices = login()
+        var prices = mainPage
                 .selectSortingOption(sortingOption)
                 .getPrices();
 
@@ -59,7 +59,7 @@ public class MainPageTests extends BookStoreBaseWebTest {
     public void should_search_product_redirect_to_product_page() {
         var dbTitle = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
-        login()
+        mainPage
                 .searchForProduct(dbTitle);
 
         assertThat(WebDriverManager.getDriver().getCurrentUrl())
@@ -71,14 +71,14 @@ public class MainPageTests extends BookStoreBaseWebTest {
     public void should_add_to_cart_open_cart_preview() {
         var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
-        login()
+        mainPage
                 .addToCart(bookName)
                 .assertThatPreviewCartPageIsOpened();
     }
 
     @Test(description = "Verify all main page elements are visible")
     public void should_all_elements_of_main_page_be_visible() {
-        login()
+        mainPage
                 .assertThatMainPageElementsAreVisible();
     }
 }

@@ -10,7 +10,7 @@ public class WishlistPageTests extends BookStoreBaseWebTest {
 
     @Test(description = "Verify that empty wishlist displays all expected elements")
     public void should_empty_wishlist_have_proper_elements_test() {
-        login()
+        mainPage
                 .goToWishlistPage()
                 .assertAllElementsOfEmptyWishlistAreDisplayed();
     }
@@ -19,7 +19,7 @@ public class WishlistPageTests extends BookStoreBaseWebTest {
     public void should_added_product_clicked_redirect_to_product_page_test() {
         var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
-        login()
+        mainPage
                 .goToProductPage(bookName)
                 .addToWishList()
                 .viewWishList()
@@ -31,7 +31,7 @@ public class WishlistPageTests extends BookStoreBaseWebTest {
     public void should_add_to_cart_work_test() {
         var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
-        login()
+        mainPage
                 .goToProductPage(bookName)
                 .addToWishList()
                 .viewWishList()

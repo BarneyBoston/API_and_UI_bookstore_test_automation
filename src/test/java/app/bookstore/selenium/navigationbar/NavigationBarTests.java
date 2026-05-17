@@ -11,7 +11,8 @@ import org.testng.annotations.Test;
 @Epic("Navigation Bar Tests")
 public class NavigationBarTests extends BookStoreBaseWebTest {
 
-    private final NavigationBarDataFactory dataFactory = new NavigationBarDataFactory(this::login);
+    private final NavigationBarDataFactory dataFactory =
+            new NavigationBarDataFactory(() -> mainPage);
 
     @DataProvider(name = "pageAllElementsNavigationData")
     public Object[][] pageAllElementsNavigationData() {

@@ -18,14 +18,14 @@ public class CheckoutPageTests extends BookStoreBaseWebTest {
 
     @Test(description = "Verify that all essential elements are displayed on the checkout page")
     public void should_all_elements_be_displayed_test() {
-        login()
+        mainPage
                 .goToCheckOutPage()
                 .assertAllElementsAreDisplayed();
     }
 
     @Test(description = "Verify that clicking 'Click here to login' expands the login window")
     public void should_click_here_to_login_expand_login_window_test() {
-        login()
+        mainPage
                 .goToCheckOutPage()
                 .clickHereToLogin()
                 .assertLoginWindowIsExpanded();
@@ -33,7 +33,7 @@ public class CheckoutPageTests extends BookStoreBaseWebTest {
 
     @Test(description = "Verify that clicking 'Click here to enter your code' expands the coupon code window")
     public void should_click_here_to_enter_your_code_expand_coupon_window_test() {
-        login()
+        mainPage
                 .goToCheckOutPage()
                 .clickHereToEnterYourCode()
                 .assertCouponWindowIsExpanded();
@@ -41,7 +41,7 @@ public class CheckoutPageTests extends BookStoreBaseWebTest {
 
     @Test(description = "Verify that placing an order without required fields shows card error")
     public void should_place_order_without_required_fields_fail_test() {
-        login()
+        mainPage
                 .goToCheckOutPage()
                 .placeOrder()
                 .assertCardErrorMessageIs("The card number is incomplete.");
@@ -58,7 +58,7 @@ public class CheckoutPageTests extends BookStoreBaseWebTest {
                 Billing Phone is a required field.
                 Billing Email address is a required field.
                 """.trim();
-        login()
+        mainPage
                 .goToCheckOutPage()
                 .inputCardNumber("4242424242424242")
                 .inputExpiryDate("12/58")
@@ -71,7 +71,7 @@ public class CheckoutPageTests extends BookStoreBaseWebTest {
     public void should_place_correct_order_work_test() {
         var dataSource = controller.getOrders().get(0).getBilling();
 
-        login()
+        mainPage
                 .goToCheckOutPage()
                 .inputFirstNameAs(dataSource.getFirst_name())
                 .inputLastNameAs(dataSource.getLast_name())

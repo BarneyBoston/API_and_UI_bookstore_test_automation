@@ -31,7 +31,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
 
     @Test(description = "Verify all essential UI elements are visible on the cart page.")
     public void should_cart_page_have_proper_elements_test() {
-        login()
+        mainPage
                 .goToCartPage()
                 .assertAllElementsAreDisplayed();
     }
@@ -40,7 +40,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
     public void should_product_name_match_chosen_product_test() {
         var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
-        login()
+        mainPage
                 .goToCartPageWithProductAs(bookName)
                 .assertProductNameMatchChosenProduct(bookName);
     }
@@ -51,7 +51,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
         var bookName1 = bookNames.get(0);
         var bookName2 = bookNames.get(1);
 
-        login()
+        mainPage
                 .addToCart(bookName1)
                 .closePreviewCart()
                 .addToCart(bookName2)
@@ -66,7 +66,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
     public void should_update_cart_trigger_pop_up_test() {
         var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
-        login()
+        mainPage
                 .goToCartPageWithProductAs(bookName)
                 .increaseQuantityOfProductBy(0, 2)
                 .updateCart()
@@ -77,7 +77,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
     public void should_update_cart_without_prior_updated_be_disabled_test() {
         var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
-        login()
+        mainPage
                 .goToCartPageWithProductAs(bookName)
                 .assertUpdateCartButtonIsDisabled();
     }
@@ -86,7 +86,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
     public void should_increase_quantity_for_one_product_work_test() {
         var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
-        login()
+        mainPage
                 .goToCartPageWithProductAs(bookName)
                 .increaseQuantityOfProductBy(0, 2)
                 .updateCart()
@@ -99,7 +99,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
         var bookName1 = bookNames.get(0);
         var bookName2 = bookNames.get(1);
 
-        login()
+        mainPage
                 .addToCart(bookName1)
                 .closePreviewCart()
                 .addToCart(bookName2)
@@ -118,7 +118,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
     public void should_reduce_quantity_for_one_product_work_test() {
         var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
-        login()
+        mainPage
                 .goToCartPageWithProductAs(bookName)
                 .increaseQuantityOfProductBy(0, 5)
                 .reduceQuantityOfProductBy(0, 2)
@@ -132,7 +132,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
         var bookName1 = bookNames.get(0);
         var bookName2 = bookNames.get(1);
 
-        login()
+        mainPage
                 .addToCart(bookName1)
                 .closePreviewCart()
                 .addToCart(bookName2)
@@ -153,7 +153,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
     public void should_input_quantity_for_product_work_test() {
         var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
-        login()
+        mainPage
                 .goToCartPageWithProductAs(bookName)
                 .inputQuantityAs(0, "55")
                 .updateCart()
@@ -164,7 +164,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
     public void should_update_quantity_update_subtotal_for_product_test() {
         var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
-        login()
+        mainPage
                 .goToCartPageWithProductAs(bookName)
                 .inputQuantityAs(0, "5")
                 .updateCart()
@@ -175,7 +175,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
     public void should_update_quantity_update_cart_total_test() {
         var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
-        login()
+        mainPage
                 .goToCartPageWithProductAs(bookName)
                 .inputQuantityAs(0, "5")
                 .updateCart()
@@ -186,7 +186,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
     public void should_correct_coupon_work_test() {
         var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
-        login()
+        mainPage
                 .goToCartPageWithProductAs(bookName)
                 .inputCouponCodeAs("testCoupon")
                 .applyCoupon()
@@ -198,7 +198,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
         var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
         var couponCode = "incorrectCoupon";
 
-        login()
+        mainPage
                 .goToCartPageWithProductAs(bookName)
                 .inputCouponCodeAs(couponCode)
                 .applyCoupon()
@@ -209,7 +209,7 @@ public class CartPageTests extends BookStoreBaseWebTest {
     public void should_proceed_to_checkout_work_test() {
         var bookName = BookStoreDB.getDb().selectRandomActiveProduct().getName();
 
-        login()
+        mainPage
                 .goToCartPageWithProductAs(bookName)
                 .proceedToCheckout()
                 .assertCheckoutTextIsDisplayed();

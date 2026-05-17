@@ -1,5 +1,6 @@
 package app.bookstore.selenium.pages;
 
+import app.bookstore.dto.Config;
 import app.bookstore.selenium.dto.HasNavigationBar;
 import app.bookstore.selenium.pages.productpage.ProductPage;
 import io.qameta.allure.Step;

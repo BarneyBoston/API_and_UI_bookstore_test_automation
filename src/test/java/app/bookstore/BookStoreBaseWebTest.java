@@ -3,38 +3,37 @@ package app.bookstore;
 import app.bookstore.db.BookStoreDB;
 import app.bookstore.dto.Config;
 import app.bookstore.selenium.WebDriverManager;
+import app.bookstore.selenium.helpers.AppFlow;
 import app.bookstore.selenium.helpers.BrowserFactory;
 import app.bookstore.selenium.helpers.NoSuchBrowserException;
 import app.bookstore.selenium.pages.MainPage;
 import io.qameta.allure.Attachment;
-import io.qameta.allure.Step;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
 public abstract class BookStoreBaseWebTest {
 
-    @BeforeMethod
-    public void setUp() {
-        var browser = Config.getInstance().getBrowser();
-        try {
-            WebDriverManager.setDriver(BrowserFactory.getBrowser(browser));
-        } catch (NoSuchBrowserException e) {
-            throw new RuntimeException(e);
-        }
-        BookStoreDB.init();
-    }
+    protected WebDriver driver;
+    protected MainPage mainPage;
 
-    @Step("Login to main page")
-    protected MainPage login() {
-        WebDriverManager.getDriver().get(Config.getInstance().getBaseUrl());
-        MainPage mainPage = new MainPage(WebDriverManager.getDriver());
-        PageFactory.initElements(new AjaxElementLocatorFactory(WebDriverManager.getDriver(), 10), mainPage);
-        return mainPage;
+    @BeforeMethod
+    public void setUp() throws NoSuchBrowserException {
+
+        var browser = Config.getInstance().getBrowser();
+
+        WebDriver driver = BrowserFactory.getBrowser(browser);
+
+        WebDriverManager.setDriver(driver);
+
+        BookStoreDB.init();
+
+        this.driver = driver;
+
+        mainPage = new AppFlow(driver).open();
     }
 
     @AfterMethod
